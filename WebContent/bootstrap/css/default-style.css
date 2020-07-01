@@ -1,0 +1,687 @@
+body{
+	/*------------------------------
+	62.5 trick อยากรู้เพิ่มเติมหาอ่านได้ตาม google
+		10px = 0.625rem
+		12px = 0.75rem
+		14px = 0.875rem
+		16px = 1rem (base)
+		18px = 1.125rem
+		20px = 1.25rem
+		24px = 1.5rem
+		30px = 1.875rem
+		32px = 2rem
+	------------------------------*/
+	font-size: 18px;
+	font-size: 1.125rem;
+}
+
+.table{
+	box-shadow: 0 2px 2px rgba(204, 197, 185, 0.5);
+}
+
+
+/*———————————————————————————————————————————————————————————————————————
+	INPUT
+————————————————————————————————————————————————————————————————————————*/
+
+input[data-unit]{
+	border-right: none;
+}
+
+input[data-unit]:focus + .input-group-detail{
+	border-right: 1px solid #5cb3fd;
+	border-top : 1px solid #5cb3fd;
+	border-bottom: 1px solid #5cb3fd;
+}
+
+input[data-unit]:disabled + .input-group-detail
+,input[data-unit][readonly] + .input-group-detail{
+	border-right: 1px solid rgba(0, 0, 0, 0.15);
+	border-top : 1px solid rgba(0, 0, 0, 0.15);
+	border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+	cursor: not-allowed;
+  	background-color: #eceeef;
+  	opacity: 1;
+}
+
+input[data-unit]:disabled:focus + .input-group-detail
+,input[data-unit][readonly]:focus + .input-group-detail{
+	border-right: 1px solid #5cb3fd;
+	border-top : 1px solid #5cb3fd;
+	border-bottom: 1px solid #5cb3fd;
+}
+
+.input-group-detail{
+	padding: 0.5rem 0.75rem;
+  	margin-bottom: 0;
+  	font-size: 1rem;
+ 	font-weight: normal;
+  	line-height: 1.25;
+  	color: #31b0d5;
+  	text-align: center;
+  	background-color: white;
+ 	border: 1px solid rgba(0, 0, 0, 0.15);
+  	border-radius: 0.25rem;
+  	border-bottom-left-radius: 0;
+  	border-top-left-radius: 0;
+  	border-left : none;
+}
+
+.input-group.input-group-unstyled input.form-control {
+    -webkit-border-radius: 4px;
+       -moz-border-radius: 4px;
+            border-radius: 4px;
+}
+
+.input-group-unstyled .input-group-addon {
+    border-radius: 4px;
+    border: 0px;
+    background-color: transparent;
+    color : red;
+}
+
+
+.textarea-expand{
+	resize: both;
+}
+
+textarea {
+    resize: none;
+}
+
+
+/*———————————————————————————————————————————————————————————————————————
+	MENU & NAVIGATION SYSTEM
+————————————————————————————————————————————————————————————————————————*/
+.navbar-brand .fa-bars{
+	padding-right: 10px;
+}
+
+
+.fixed-top .navbar-toggler{
+	border: none;
+	padding-top: 8px;
+	color : rgba(255, 255, 255, 0.5);
+}
+
+
+.navigation-arrow{
+	margin-left: 10px;
+	margin-right: 10px;
+}
+
+.navigation-head , .navigation-sub{
+	color: #666666;
+	font-weight: 600;
+	text-shadow: 0 1px 0 rgba(0,0,0,0.15);
+	cursor: default;
+	-webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
+}
+
+.navigation-head{
+	/*font-size: 1.5rem;*/
+}
+
+.navigation-sub{
+	padding-bottom: 13px;
+	border-bottom: 1px solid rgba(0,0,0,0.15);
+	margin-bottom: 20px;
+	
+}
+
+
+
+
+/*———————————————————————————————————————————————————————————————————————
+	ELEMENT
+————————————————————————————————————————————————————————————————————————*/
+
+.star-red{
+	color: red;
+	padding-left: 5px;
+}
+
+.border_select {
+	border: 1px solid #d9534f !important;
+	border-radius : 0.25rem;
+}
+
+.color-white{
+	color: white;
+}
+
+
+/*———————————————————————————————————————————————————————————————————————
+	DISABLED , READONLY
+————————————————————————————————————————————————————————————————————————*/
+input.disabled
+,textarea.disabled
+,input[readonly]
+,textarea[readonly]
+,input[readonly]::placeholder {
+	background-color: #ECEEEF !important;
+	color: #212529 !important;
+	font-weight: bold;
+	cursor: not-allowed;
+	
+}
+
+
+textarea.disabled
+, textarea[readonly]
+, textarea:disabled {
+    resize: none;
+}
+
+textarea[readonly].textarea-expand
+, textarea:disabled.textarea-expand {
+    resize: both;
+}
+
+input[type=checkbox][disabled][readonly] + label,
+input[type=radio][disabled][readonly] + label {
+	color: #212529 !important;
+	font-weight: bold;
+	cursor: not-allowed;
+	-webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
+}
+
+
+:disabled:not(button) , :disabled::placeholder {
+	background-color: #ECEEEF !important;
+	color: #212529 !important;
+	font-weight: bold;
+}
+
+input[type="checkbox"]:disabled + label,
+input[type="radio"]:disabled + label {
+	color: #212529 !important;
+	font-weight: bold;
+	cursor: not-allowed;
+	-webkit-touch-callout: none; 
+    -webkit-user-select: none; 
+     -khtml-user-select: none;
+       -moz-user-select: none; 
+        -ms-user-select: none; 
+            user-select: none;
+}
+
+
+
+
+/*———————————————————————————————————————————————————————————————————————
+	ALERT
+————————————————————————————————————————————————————————————————————————*/
+h4.alert-icon{
+	display : inline;
+}
+
+.notify-text A.LINK {
+	color: #AC211D !important;
+	font-weight: normal;
+	text-decoration: underline;
+}
+
+/* override notify.css */
+.notify {
+	margin-top: 70px;
+	min-width: 255px;
+	z-index: 1100;
+}
+
+
+.notify.error {
+    background: #d9534f !important;
+    color: #fff;
+    border-color: #d9534f;
+}
+
+.notify.success {
+    background: #5cb85c !important;
+    color: #fff;
+    border-color: #5cb85c;
+}
+
+.notify.info {
+    background: #5bc0de !important;
+    color: #fff;
+    border-color: #5bc0de;
+}
+
+.notify.warning {
+    background: #f0ad4e !important;
+    color: #fff;
+    border-color: #f0ad4e;
+}
+
+/* override notify.css */
+.notify.notify-top-full {
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+}
+
+
+
+/*———————————————————————————————————————————————————————————————————————
+	LAYOUT
+————————————————————————————————————————————————————————————————————————*/
+
+.div-container{
+	min-height: 1024px;
+	padding-left: 30px !important; /* row -15*/
+	padding-right: 30px !important; /* row -15*/
+	border: 1px solid rgba(0, 0, 0, 0.1);
+	padding: 4.5rem 1rem;
+	box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.3);
+}
+
+
+.div-criteria{
+	border: 1px solid #cccccc;
+	border-radius : 5px;
+	background-color: white;
+	box-shadow: 0 2px 2px rgba(204, 197, 185, 0.5);
+	padding-bottom: 16px;
+	padding-top: 16px;
+	margin-left: 16px;
+	margin-right: 16px;
+	
+	padding-left: 30px !important;
+	padding-right: 30px !important;
+}
+
+
+
+.form-search label
+, .modal label
+, .form-add label{
+	/* margin-top: 0.2em; */
+}
+
+
+
+.form-add div[class*="col-std-1"]
+, .form-add div[class*="col-std-3"]
+, .form-add div[class*="col-std-cus-1"]
+, .form-add div[class*="col-std-cus-3"]
+, .form-search div[class*="col-std-1"]
+, .form-search div[class*="col-std-3"]
+, .modal-body div[class*="col-std-1"]
+, .modal-body div[class*="col-std-3"]
+, div[class*="col-cus"]
+, div[class*="col-cen-1"] {
+	padding-left: 7.5px;
+	padding-right: 7.5px;
+    /* margin-bottom: 0.5em; */
+}
+
+
+.modal-content{
+	/*padding-left: 15px;*/
+	/*padding-right: 15px;*/
+}
+
+
+@media (max-width: 768px) {
+	
+	div[class*="col-cus"]{
+		padding-right: 15px;
+	}
+	
+	div[class*="col-cus"] > label{
+		margin-right: -7.5px;
+	}
+}
+
+
+
+.form-add div[class*="col-std-2"]
+, .form-add div[class*="col-std-4"]
+, .form-add div[class*="col-std-cus-2"]
+, .form-add div[class*="col-std-cus-4"]
+, .form-search div[class*="col-std-2"]
+, .form-search div[class*="col-std-4"]
+, .modal-body div[class*="col-std-2"]
+, .modal-body div[class*="col-std-4"]
+, div[class*="col-cen-2"]{
+	padding-left: 7.5px;
+    padding-right: 15px;
+   /*  margin-bottom: 0.5em; */
+}
+
+
+
+.col-std-1{
+	background-color: none;
+}
+.col-std-2{
+	background-color: none;
+}
+.col-std-3{
+	background-color: none;
+}
+.col-std-4{
+	background-color: none;
+}
+
+
+
+
+/*———————————————————————————————————————————————————————————————————————
+	BOOTSTRAP V.4
+													OVERIDE CLASS MODIFY
+————————————————————————————————————————————————————————————————————————*/
+
+/* override bootstrap */
+.container{
+	/*background-color: #EAEAEA;*/
+}
+
+
+@media (min-width: 1430px) {
+	.container {
+		width: 1400px;
+  	}
+}
+
+/* override bootstrap */
+.container-fluid{
+	
+}
+	
+/* override bootstrap */
+fieldset{
+	border: 1px dotted #c0c0c0;
+  	margin: 0 2px;
+  	padding: 0.35em 0.625em 0.75em;
+	border-radius : 10px;
+}
+
+/* override bootstrap */
+fieldset > legend{
+	width: auto;
+}
+
+/* override bootstrap */
+.tab-content{
+	padding-top: 1rem;
+}
+
+/* override bootstrap */
+table.dataTable thead th.sorting_asc, table.dataTable thead th.sorting_desc {
+	color: #006be1; /* .bg-primary */
+}
+
+
+/* override bootstrap */
+.modal-lg {
+	max-width: 90%;
+}
+
+/* override bootstrap */
+.form-control::-webkit-input-placeholder {
+	color: rgba(0, 0, 0, 0.35);
+}
+
+/* override bootstrap */
+.form-control::-moz-placeholder {
+	color: rgba(0, 0, 0, 0.35);
+}
+
+/* override bootstrap */
+.form-control:-ms-input-placeholder {
+	color: rgba(0, 0, 0, 0.35);
+}
+
+/* override bootstrap */
+.form-control::placeholder {
+	color: rgba(0, 0, 0, 0.35);
+}
+
+/*———————————————————————————————————————————————————————————————————————
+	SELECT PICKER
+													OVERIDE CLASS MODIFY
+————————————————————————————————————————————————————————————————————————*/
+div.dropdown-menu > ul{
+    list-style:none;
+    padding-left:0px;
+    margin-left: 0px;
+}
+
+li.dropdown-item.selected{
+	padding-left: 0px;
+	padding-right: 0px;
+}
+
+li.dropdown-item.selected > a{
+    padding-left: 3rem;
+}
+
+
+
+/*———————————————————————————————————————————————————————————————————————
+	DATATABLES
+————————————————————————————————————————————————————————————————————————*/
+.checkbox-datatable {
+	margin-left: 2px;
+}
+
+/* à¸£à¸°à¸¢à¸° margin à¸£à¸°à¸«à¸§à¹ˆà¸²à¸‡ datatable à¸�à¸±à¸šà¸�à¸£à¸­à¸š criteria*/
+.dataTables_wrapper{
+	margin-top: 7px;
+}
+
+.icon-disabled {
+	cursor: not-allowed;
+    opacity: 0.65;
+}
+
+.green-accent-3 {
+	background-color: #00e676;
+}
+
+.amber-darken-2 {
+	background-color: #ffa000;
+}
+
+/*———————————————————————————————————————————————————————————————————————
+	BUTTON
+————————————————————————————————————————————————————————————————————————*/
+/* override bootstrap */
+.btn{
+	cursor: pointer;
+	/*margin-bottom: 5px;*/
+}
+
+/* BUTTON à¸¡à¸²à¸•à¸�à¸²à¸™ à¹€à¸§à¸¥à¸²à¸¢à¹ˆà¸­à¹ƒà¸«à¹‰à¹€à¸§à¹‰à¸™à¸£à¸°à¸¢à¸°à¸�à¸±à¸™ */
+.ui-sitbutton .btn{
+	margin-bottom: 5px;
+}
+
+.div-btn {
+	margin-top: 16px;
+}
+
+.div-browse-text{
+	width: 63%;
+	float: left;  
+}
+
+.div-browse-text > input{
+	position: relative;
+	z-index: -1;
+}
+
+.div-browse-btn{
+	width: 35%;
+	float: right; 
+}
+
+.div-btn > button:not(:first-child){
+	margin-left: 0.5rem;
+}
+
+
+.btn-add {
+	float: right;
+	border-radius: 0.25rem;
+	border-color: #cccccc;
+	border-top: none;
+	border-right: none;
+	border-top-left-radius: 0px;
+	border-bottom-right-radius: 0px;
+	margin-top: -16px !important;
+	margin-right: -15px !important;
+	margin-bottom: 10px;
+}
+
+.btn-add:hover {
+	border: 1px solid #cccccc;
+	border-top: none;
+	border-right: none;
+	border-top-left-radius: 0px;
+	border-bottom-right-radius: 0px;
+	margin-right: -15px !important;
+} 
+
+
+
+/*———————————————————————————————————————————————————————————————————————
+	FIELDSET
+————————————————————————————————————————————————————————————————————————*/
+fieldset.fieldset-bg-1{
+	background-color: rgba(187, 187, 187, 0.1);
+}
+
+fieldset.fieldset-bg-2{
+	background-color: rgba(187, 187, 187, 0.3);
+}
+
+fieldset.fieldset-bg-3{
+	background-color: rgba(187, 187, 187, 0.5);
+}
+
+
+
+/*———————————————————————————————————————————————————————————————————————
+	OTHER & CLASS HELP
+————————————————————————————————————————————————————————————————————————*/
+.hide-border{
+	border: none !important;
+}
+
+.hide-padding{
+	padding: 0px !important;
+}
+
+.input-group-addon{
+	cursor: pointer;
+}
+
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
+}
+
+
+
+
+/*———————————————————————————————————————————————————————————————————————
+	AUTOCOMPLETE
+————————————————————————————————————————————————————————————————————————*/
+ul.ui-autocomplete .ui-menu-item-wrapper{
+	padding-left: 1rem;
+	font-size: 1rem;
+	color: #292b2c;
+	line-height: 1.25;
+	padding: 3px 1.5rem;
+	white-space: nowrap;
+	
+}
+
+
+
+/*———————————————————————————————————————————————————————————————————————
+	ACCORDION
+————————————————————————————————————————————————————————————————————————*/
+  
+.accordion > .card{
+	margin-top: 3px;
+}   
+
+.accordion:not(:first-of-type){
+	margin-top: 10px;
+}
+
+.accordion  .card-active{
+	background-color: #5bc0de;
+	color: white;
+}
+
+.accordion .card-header{
+	font-weight: 600;
+	cursor: pointer;
+}
+
+.acc-arrow{
+	margin-top: 5px;
+}
+
+
+
+
+/*———————————————————————————————————————————————————————————————————————
+	MANAGE LAYOUT DEVICE
+————————————————————————————————————————————————————————————————————————*/
+@media (max-width: 768px) {
+	/* BUTTON à¸¡à¸²à¸•à¸�à¸²à¸™ à¹€à¸§à¸¥à¸²à¸¢à¹ˆà¸­à¹ƒà¸«à¹‰à¹€à¸§à¹‰à¸™à¸£à¸°à¸¢à¸°à¸�à¸±à¸™ */
+	.ui-sitbutton .btn{
+		margin-bottom: 10px;
+	}
+	
+}
+
+
+
+ 	
+@media (min-width: 992px) {
+	.modal-lg {
+		max-width: 90%;
+  	}
+}
+
+
+div.lpp-style{
+	width: 50% !important;
+}
+
+
+label.md-form-active{
+	/* margin-top: 0.2rem !important; */
+}
+
+FONT.comment,
+span.remark{
+    color: red;
+    font-family: 'Kanit';
+    font-size: 11px;
+    font-weight: normal;
+    padding: 0;
+}

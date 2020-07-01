@@ -1,0 +1,5 @@
+.ajax_loader {
+	background: url("../images/loading.gif") no-repeat center center transparent;
+	width:100%;
+	height:100vh;
+}

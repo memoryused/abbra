@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<package name="security" namespace="/jsp/security" extends="common">
+	    <!-- Login -->
+		<action name="*Login" class="com.sit.app.web.security.login.action.LoginAction" method="{1}">
+			<result name="init">/jsp/security/login/login.jsp</result>
+		</action>
+		
+		<!-- Member -->
+		<action name="*Member" class="com.sit.app.web.security.member.action.MemberAction" method="{1}">
+			<result name="init">/jsp/security/member/membersearch.jsp</result>
+		</action>
+		
+		<!-- Member Group -->
+		<action name="*MemberGroup" class="com.sit.app.web.security.membergroup.action.MemberGroupAction" method="{1}">
+			<result name="init">/jsp/security/membergroup/membergroupsearch.jsp</result>
+		</action>
+		
+	</package>
+</struts>

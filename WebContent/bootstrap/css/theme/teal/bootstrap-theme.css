@@ -1,0 +1,116 @@
+.checkbox-default{
+	
+}
+
+
+
+.checkbox-default input[type="checkbox"]:checked + label::before{
+  	background-color: #00aba9;
+  	border-color: #00aba9;
+}
+
+.checkbox-default input[type="checkbox"]:checked + label::after{
+  	color: #fff;
+}
+
+.checkbox-default input[type="checkbox"]:indeterminate + label::before{
+  	background-color: #00aba9;
+  	border-color: #00aba9;
+}
+
+.checkbox-default input[type="checkbox"]:indeterminate + label::after{
+  	background-color: #fff;
+}
+
+
+
+.radio-default input[type="radio"] + label::after {
+  	background-color: #00aba9;
+}
+.radio-default input[type="radio"]:checked + label::before {
+  	border-color: #00aba9;
+}
+.radio-default input[type="radio"]:checked + label::after {
+  	background-color: #00aba9;
+}
+
+
+
+.btn-default {
+  color: #fff;
+  background-color: #00aba9;
+  border-color: #00aba9;
+}
+
+
+.btn-default:hover {
+  color: #fff;
+  background-color: #019491;
+  border-color: #018381;
+}
+
+.btn-default:focus, .btn-default.focus {
+  -webkit-box-shadow: 0 0 0 2px rgba(0, 171, 169, 0.5);
+          box-shadow: 0 0 0 2px rgba(0, 171, 169, 0.5);
+}
+
+.btn-default.disabled, .btn-default:disabled {
+  background-color: #00aba9;
+  border-color: #00aba9;
+}
+
+.btn-default:active, .btn-default.active,
+.show > .btn-default.dropdown-toggle {
+  color: #fff;
+  background-color: #019491;
+  background-image: none;
+  border-color: #018381;
+}
+
+
+
+.input-group-addon{
+	background-color: rgba(0, 171, 169, 1);
+	border-color: #00aba9;
+	color: white;
+}
+
+
+.form-control:focus {
+	border-color: rgba(0, 171, 169, 0.5);
+}
+
+
+.spinner-default:not(.ui-button-disabled){
+	background-color: #00aba9;
+ 	border: 1px solid #00aba9 !important;
+	color: white;
+}
+
+.spinner-default i{
+	color: white;
+}
+
+.spinner-default:HOVER{
+	color: #fff;
+  	background-color: #019491;
+  	border-color: #018381;
+}
+
+
+li.dropdown-item.selected{
+	background-color: #00aba9;
+}
+li.dropdown-item.selected a.dropdown-item {
+	background-color: #00aba9;
+	color: #FFFFFF;
+}
+
+ul.ui-autocomplete .ui-state-hover
+,ul.ui-autocomplete  .ui-state-active {
+	color: #FFFFFF !important;
+	text-decoration: none;
+	background-color: #00aba9;
+	border : none;
+	cursor: pointer;
+}

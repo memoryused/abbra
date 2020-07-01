@@ -1,0 +1,97 @@
+.color-maldives{
+	color: #308b8d;
+}
+
+.bg-maldives{
+	background-color: #308b8d;
+}
+
+.bg-cancel{
+	background-color: #DD393B;
+}
+
+.color-cancel{
+	color: #DD393B;
+}
+
+.bg-active{
+	
+}
+
+.color-active{
+	
+}
+
+.bg-unactive{
+	
+}
+
+.color-unactive{
+	
+}
+
+
+
+
+
+.div-combo-atoll{
+	width: 63%;
+	float: left;  
+}
+
+.div-combo-island{
+	width: 35%;
+	float: right; 
+}
+
+
+
+
+
+@media (max-width: 576px) {
+	
+	.div-combo-atoll{
+		width: 100%;
+		float: none;  
+	}
+	
+	.div-combo-island{
+		width: 100%;
+		float: none; 
+	}
+	
+	.div-browse-text{
+		width: 100%;
+		float: none;  
+	}
+	
+	.div-browse-btn{
+		text-align: right;
+		margin-top: 5px;
+		width: 100%;
+		float: none; 
+	}
+
+	
+}
+
+
+
+/*———————————————————————————————————————————————————————————————————————
+	LAYOUT VERIFY
+————————————————————————————————————————————————————————————————————————*/
+
+h3.icon-success{
+	display: inline;
+	padding-right: 10px;
+	padding-left: 20px;
+	color : #5cb85c;
+}
+
+h3.icon-danger{
+	display: inline;
+	padding-right: 10px;
+	padding-left: 20px;
+	color : #d9534f;
+}
+

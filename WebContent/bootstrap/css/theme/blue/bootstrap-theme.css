@@ -1,0 +1,66 @@
+.checkbox-default{
+	
+}
+
+
+
+.checkbox-default input[type="checkbox"]:checked + label::before{
+  	background-color: #9C863C;
+  	border-color: #9C863C;
+}
+
+.checkbox-default input[type="checkbox"]:checked + label::after{
+  	color: #fff;
+}
+
+.checkbox-default input[type="checkbox"]:indeterminate + label::before{
+  	background-color: #9C863C;
+  	border-color: #9C863C;
+}
+
+.checkbox-default input[type="checkbox"]:indeterminate + label::after{
+  	background-color: #fff;
+}
+
+
+.radio-default input[type="radio"] + label::after {
+  	background-color: #9C863C;
+}
+.radio-default input[type="radio"]:checked + label::before {
+  	border-color: #9C863C;
+}
+.radio-default input[type="radio"]:checked + label::after {
+  	background-color: #9C863C;
+}
+
+
+.btn-default {
+	color: #fff;
+	background-color: #9C863C;
+	border-color: #9C863C;
+}
+
+.btn-default:hover {
+  color: #fff;
+  background-color: #9C863C;
+  border-color: #9C863C;
+}
+
+.btn-default:focus, .btn-default.focus {
+  -webkit-box-shadow: 0 0 0 2px rgba(0, 171, 169, 0.5);
+          box-shadow: 0 0 0 2px rgba(0, 171, 169, 0.5);
+}
+
+.btn-default.disabled, .btn-default:disabled {
+  background-color: #9C863C;
+  border-color: #9C863C;
+}
+
+.btn-default:active, .btn-default.active,
+.show > .btn-default.dropdown-toggle {
+  color: #fff;
+  background-color: #9C863C;
+  background-image: none;
+  border-color: #9C863C;
+}
+

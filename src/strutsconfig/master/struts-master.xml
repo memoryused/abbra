@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<package name="master" namespace="/jsp/master" extends="common">
+	    <!-- Product -->
+		<action name="*Product" class="com.sit.app.web.master.product.action.ProductAction" method="{1}">
+			<result name="init">/jsp/master/product/productsearch.jsp</result>
+		</action>
+		
+		<!-- Vender -->
+		<action name="*Vender" class="com.sit.app.web.master.vender.action.VenderAction" method="{1}">
+			<result name="init">/jsp/master/vender/vendersearch.jsp</result>
+		</action>
+		
+		<!-- ProductMapping -->
+		<action name="*ProductMapping" class="com.sit.app.web.master.productmapping.action.ProductMappingAction" method="{1}">
+			<result name="init">/jsp/master/productmapping/productmappingsearch.jsp</result>
+		</action>
+	</package>
+</struts>

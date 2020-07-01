@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<parameter>
+    <application>
+        <contextType>A</contextType> <!-- A (Agency) , O (Operator) -->
+        <applicationLocaleString>en</applicationLocaleString>
+        <databaseLocaleString>en</databaseLocaleString>
+        <datetimeLocaleString>en</datetimeLocaleString>
+        <lppString>100,200,300,400,500,600,700,800,900,1000</lppString>
+        <maxExceed>1000</maxExceed> <!-- 1000 -->
+        <maxExceedReport>1000</maxExceedReport>
+        <maxSearchLogHistory>2000</maxSearchLogHistory>
+        <supportLocaleString>en</supportLocaleString>
+        <theme>maldives</theme>
+        <themeBootstrap>teal</themeBootstrap>
+        <title>Smart Certification</title>
+        <fillAtLeast>3</fillAtLeast> <!-- กำหนดค่าการกรอกข้อมูลอย่างน้อย ก่อนค้นหาของ autocomplete -->
+        <sqlPath></sqlPath>
+        <mailConfigPath>D:\SomapaIT\SIT\ws_certification\webcertificate\WebContent\WEB-INF\</mailConfigPath>
+    </application>
+
+    <attachFile>
+        <!-- ที่เก็บของ default image icon ของประเภทเอกสารของแต่ละประเภท -->
+        <imageDefault>/images/default/</imageDefault>
+		<!-- ที่เก็บไฟล์ที่ถูกบันทึกลงฐานข้อมูลแล้ว  -->
+        <serverPath>/opt/data/</serverPath>
+		<!-- ที่เก็บไฟล์ที่ยังไม่ถูกบันทึกลงฐาน -->
+        <tmpPath>/opt/data/temp/</tmpPath>
+    </attachFile>
+
+    <database>
+    	<index>0</index>
+        <databaseType>mysql</databaseType>
+        <jndi>true</jndi>
+        <lookup>jdbc/template_dc</lookup>
+        <schemas>[OC]:scl</schemas>
+    </database>
+
+    <dateFormat>
+    	<!-- รูปแบบวันที่ ที่นำไป insert update ลงฐานข้อมูล  -->
+        <forDatabaseInsert>DD/MM/YYYY</forDatabaseInsert>
+        <forDatabaseInsertHHMM>DD/MM/YYYY HH:mm</forDatabaseInsertHHMM>
+        <forDatabaseInsertHHMMSS>DD/MM/YYYY HH:mm:ss</forDatabaseInsertHHMMSS>
+
+        <!-- รูปแบบวันที่ ที่ได้จากการ select จากฐานข้อมูล  โดยกำหนดตามมาตรฐาน SD -->
+        <forDatabaseSelect>DD/MM/YYYY</forDatabaseSelect>
+        <forDatabaseSelectHHMM>DD/MM/YYYY HH:mm</forDatabaseSelectHHMM>
+        <forDatabaseSelectHHMMSS>DD/MM/YYYY HH:mm:ss</forDatabaseSelectHHMMSS>
+
+        <!-- รูปแบบวันที่ ที่นำไปแสดงบนหน้าจอ  -->
+        <forDisplay>DD/MM/YYYY</forDisplay>
+        <forDisplayHHMM>DD/MM/YYYY HH:mm</forDisplayHHMM>
+        <forDisplayHHMMSS>DD/MM/YYYY HH:mm:ss</forDisplayHHMMSS>
+    </dateFormat>
+
+    <report>
+        <font>TH SarabunPSK</font>
+        <pathfile></pathfile>
+        <passwordReport>1234567890</passwordReport>
+    	<pathLicense></pathLicense>
+    </report>
+
+</parameter>

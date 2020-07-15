@@ -6,7 +6,7 @@ searchCount{
 	where 1=1
 	and ih.item_id = %s
 	and vh.vendor_id = %s
-	and ih.active = %s
+	and vi.active = %s
 	and vi.deleted = 'N'
 }
 
@@ -18,7 +18,7 @@ search{
 	where 1=1
 	and ih.item_id = %s
 	and vh.vendor_id = %s
-	and ih.active = %s
+	and vi.active = %s
 	and vi.deleted = 'N'
 	order by 
 	%s

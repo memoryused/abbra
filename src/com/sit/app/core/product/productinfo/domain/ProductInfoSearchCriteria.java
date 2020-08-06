@@ -10,7 +10,9 @@ public class ProductInfoSearchCriteria extends SearchCriteria{
 	public static final int TABLE_HEADER_SORTS_TYPE_1 = 1;
 	
 	private String productId; 
+	private String productName; 
 	private String venderId; 
+	private String venderName; 
 	private String status;
 	
 	public ProductInfoSearchCriteria() {
@@ -91,5 +93,20 @@ public class ProductInfoSearchCriteria extends SearchCriteria{
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	
+
+	public String getProductName() {
+		return productName;
+	}
+
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
+
+	public String getVenderName() {
+		return venderName;
+	}
+
+	public void setVenderName(String venderName) {
+		this.venderName = venderName;
+	}
 }

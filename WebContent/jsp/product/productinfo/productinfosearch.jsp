@@ -93,15 +93,16 @@ function updateStatus(status, confirmMsg, action) {
 					
 					<div class="col-md-12">
 						<div class="md-form">
-							<s:select id="listProduct"
+							<s:select id="criteria_productId_autocomplete"
 								list="listProduct"
-								name="criteria.productId"
 								headerKey=""
-								headerValue="%{getText('all')}"
+								headerValue=""
 								listKey="key"
 								listValue="value" 
 								cssClass="form-control clearform" />
-							<label for="listProduct"><s:text name="prd.productName"></s:text></label>
+							<s:hidden id="criteria_productId" name="criteria.productId" data-code-of="criteria_productId_autocomplete" cssClass="form-control autocomplete clearform"/>
+							<s:hidden id="criteria_productName" name="criteria.productName" data-text-of="criteria_productId_autocomplete"/>
+							<label for="criteria_productId_autocomplete"><s:text name="prd.productName"></s:text></label>
 						</div>
 					</div>
 					
@@ -110,15 +111,16 @@ function updateStatus(status, confirmMsg, action) {
 					
 					<div class="col-md-12">
 						<div class="md-form">
-							<s:select id="listVender"
+							<s:select id="criteria_venderId_autocomplete"
 								list="listVender"
-								name="criteria.venderId"
 								headerKey=""
-								headerValue="%{getText('all')}"
+								headerValue=""
 								listKey="key"
 								listValue="value" 
 								cssClass="form-control clearform" />
-							<label for="listVender"><s:text name="prd.venderShortName"></s:text></label>
+							<s:hidden id="criteria_venderId" name="criteria.venderId" data-code-of="criteria_venderId_autocomplete" cssClass="form-control autocomplete clearform"/>
+							<s:hidden id="criteria_venderName" name="criteria.venderName" data-text-of="criteria_venderId_autocomplete"/>
+							<label for="criteria_venderId_autocomplete"><s:text name="prd.venderShortName"></s:text></label>
 						</div>
 					</div>
 					

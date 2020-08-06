@@ -118,7 +118,7 @@ function validateModal(){
 	<div class="col-std">
 		<div class="col-md-12">
 			<div class="md-form">
-				<label for="listStandard" class="md-form-active"><s:text name="prd.standard"/></label><br/>
+				<label for="listStandard" class="md-form-active"><s:text name="prd.standard"/><em>*</em></label><br/>
 				<input id="listStandard"/>
 				<s:hidden name="productInfo.dialog.docTransId"/>
 			</div>
@@ -140,7 +140,7 @@ function validateModal(){
 			<div class="col-md-12">
 				<div class="md-form">
 					<s:textfield id="contractEmail" name="productInfo.dialog.contractEmail" cssClass="form-control requireInputx clearform"/>
-					<label for="contractEmail"><s:text name="prd.contractMail"/></label>
+					<label for="contractEmail"><s:text name="prd.contractMail"/><em>*</em></label>
 				</div>
 			</div>
 		</div>
@@ -185,7 +185,7 @@ function validateModal(){
 				
 				<s:textfield cssClass="form-control requireInput clearform" id="pdfFileNameDisplay" autocomplete="off" name="productInfo.dialog.fileMetaPdf.fileUploadFileName" />
 				<s:hidden id="pdfFileNameHide" name="productInfo.dialog.fileMetaPdf.fileUploadFileNameTmp"/>
-				<label for="pdfFileNameDisplay"><s:text name="prd.pdfFileUpload"/></label>
+				<label for="pdfFileNameDisplay"><s:text name="prd.pdfFileUpload"/><em>*</em></label>
 		    </div>
 		</div>
 	</div>

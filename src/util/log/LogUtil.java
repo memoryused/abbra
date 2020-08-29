@@ -15,4 +15,7 @@ public class LogUtil {
 	
 	public static final Logger PRODUCT_HOME = Logger.getLogger("PRODUCT_HOME");
 	public static final Logger PRODUCT_INFO = Logger.getLogger("PRODUCT_INFO");
+	
+	public static final Logger PRODUCT = Logger.getLogger("PRODUCT");
+	public static final Logger VENDOR = Logger.getLogger("VENDOR");
 }

@@ -4,6 +4,7 @@ import java.io.Serializable;
 import resources.sql.selectitem.SelectItemSQL;
 import resources.sql.security.SecuritySQL;
 import resources.sql.product.ProductSQL;
+import resources.sql.master.MasterSQL;
 
 public enum SQLPath implements Serializable {
 	/**
@@ -13,6 +14,8 @@ public enum SQLPath implements Serializable {
 	, LOGIN_SQL(SecuritySQL.class, "resources/sql/security/Login.sql")
 	, PRODUCT_HOME(ProductSQL.class, "resources/sql/product/ProductHome.sql")
 	, PRODUCT_INFO(ProductSQL.class, "resources/sql/product/ProductInfo.sql")
+	, ITEM(MasterSQL.class, "resources/sql/master/Item.sql")
+	, VENDOR(MasterSQL.class, "resources/sql/master/Vendor.sql")
 	;
 
 	private String path;

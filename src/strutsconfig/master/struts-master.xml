@@ -7,11 +7,15 @@
 	    <!-- Product -->
 		<action name="*Product" class="com.sit.app.web.master.product.action.ProductAction" method="{1}">
 			<result name="init">/jsp/master/product/productsearch.jsp</result>
+			<result name="search">/jsp/master/product/productsearch.jsp</result>
+			<result name="addEdit">/jsp/master/product/productaddedit.jsp</result>
 		</action>
 		
 		<!-- Vender -->
-		<action name="*Vender" class="com.sit.app.web.master.vender.action.VenderAction" method="{1}">
-			<result name="init">/jsp/master/vender/vendersearch.jsp</result>
+		<action name="*Vendor" class="com.sit.app.web.master.vendor.action.VendorAction" method="{1}">
+			<result name="init">/jsp/master/vendor/vendorsearch.jsp</result>
+			<result name="search">/jsp/master/vendor/vendorsearch.jsp</result>
+			<result name="addEdit">/jsp/master/vendor/vendoraddedit.jsp</result>
 		</action>
 		
 		<!-- ProductMapping -->

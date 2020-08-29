@@ -1,4 +1,4 @@
-package com.sit.app.web.master.product.action;
+package com.sit.app.web.master.vendor.action;
 
 import java.util.List;
 
@@ -6,11 +6,11 @@ import org.apache.log4j.Logger;
 
 import com.opensymphony.xwork2.ModelDriven;
 import com.sit.app.core.config.parameter.domain.DBLookup;
-import com.sit.app.core.master.product.domain.Item;
-import com.sit.app.core.master.product.domain.ItemModel;
-import com.sit.app.core.master.product.domain.ItemSearch;
-import com.sit.app.core.master.product.domain.ItemSearchCriteria;
-import com.sit.app.core.master.product.service.ItemManager;
+import com.sit.app.core.master.vendor.domain.Vendor;
+import com.sit.app.core.master.vendor.domain.VendorModel;
+import com.sit.app.core.master.vendor.domain.VendorSearch;
+import com.sit.app.core.master.vendor.domain.VendorSearchCriteria;
+import com.sit.app.core.master.vendor.service.VendorManager;
 import com.sit.app.core.security.authorization.domain.PFCode;
 import com.sit.app.core.selectitem.service.SelectItemManager;
 import com.sit.common.CommonAction;
@@ -28,15 +28,15 @@ import util.referrer.ReferrerUtil;
 import util.string.StringUtil;
 import util.web.SessionUtil;
 
-public class ProductAction extends CommonAction implements InterfaceAction, ModelDriven<ItemModel>{
+public class VendorAction extends CommonAction implements InterfaceAction, ModelDriven<VendorModel>{
 
-	private static final long serialVersionUID = -9045677964496488749L;
+	private static final long serialVersionUID = -1240090006732855676L;
 
-	private ItemModel model = new ItemModel();
+	private VendorModel model = new VendorModel();
 	
-	public ProductAction() {
+	public VendorAction() {
 		try {
-			getAuthorization(PFCode.PRODUCT);
+			getAuthorization(PFCode.VENDOR);
 		} catch (Exception e) {
 			loggerInititial().error("", e);
 		}
@@ -53,7 +53,7 @@ public class ProductAction extends CommonAction implements InterfaceAction, Mode
 			conn = new CCTConnectionProvider().getConnection(conn, DBLookup.ORA_OC.getLookup());
 
 			// ตรวจสอบสิทธิ์การใช้งาน และกำหนดค่าเริ่มต้นให้กับหน้าค้นหาของระบบ
-			result = manageInitial(conn, model, new ItemSearchCriteria(), PF_CODE.getSearchFunction(), PageType.SEARCH);
+			result = manageInitial(conn, model, new VendorSearchCriteria(), PF_CODE.getSearchFunction(), PageType.SEARCH);
 
 		} catch (Exception e) {
 			manageException(conn, PF_CODE.getSearchFunction(), this, e, model);
@@ -67,7 +67,7 @@ public class ProductAction extends CommonAction implements InterfaceAction, Mode
 	}
 
 	@Override
-	public ItemModel getModel() {
+	public VendorModel getModel() {
 		return model;
 	}
 
@@ -76,7 +76,7 @@ public class ProductAction extends CommonAction implements InterfaceAction, Mode
 		SelectItemManager manager = new SelectItemManager(conn, getUser(), loggerInititial());
 		
 		try {
-			model.setListProduct(manager.searchProductSelectItem());
+			model.setListVendor(manager.searchVenderSelectItem());
 			model.setListStatus(manager.searchStatusSelectItem());
 		} catch (Exception e) {
 			loggerInititial().error("", e);
@@ -107,8 +107,8 @@ public class ProductAction extends CommonAction implements InterfaceAction, Mode
 			// ตรวจสอบสิทธิ์การใช้งาน และจัดการเงือนไขการค้นหา
 			result = manageSearchAjax(conn, model, model.getCriteria(), PF_CODE.getSearchFunction());
 
-			ItemManager manager = new ItemManager(conn, getUser(), loggerInititial());
-			List<ItemSearch> lstResult = manager.search(model.getCriteria());
+			VendorManager manager = new VendorManager(conn, getUser(), loggerInititial());
+			List<VendorSearch> lstResult = manager.search(model.getCriteria());
 
 			// จัดการผลลัพธ์และข้อความถ้าไม่พบข้อมูล
 			manageSearchResult(model, lstResult);
@@ -165,11 +165,11 @@ public class ProductAction extends CommonAction implements InterfaceAction, Mode
 			result = manageAdd(conn, model);
 
 			//3.บันทึกเพิ่มข้อมูล
-			ItemManager manager = new ItemManager(conn, getUser(), loggerInititial());
-			manager.add(model.getItem());
+			VendorManager manager = new VendorManager(conn, getUser(), loggerInititial());
+			manager.add(model.getVendor());
 
 			//4.เคลียร์ค่าหน้าเพิ่มทั้งหมด
-			model.setItem(new Item());		
+			model.setVendor(new Vendor());		
 
 		} catch (Exception e) {
 			//5.จัดการ exception กรณีที่มี exception เกิดขึ้นในระบบ
@@ -193,7 +193,7 @@ public class ProductAction extends CommonAction implements InterfaceAction, Mode
 		CCTConnection conn = null;
 
 		try {
-			String refId = ReferrerUtil.convertReferrerToId(getUser().getUserName(), SessionUtil.getId(), model.getItem().getItemId());
+			String refId = ReferrerUtil.convertReferrerToId(getUser().getUserName(), SessionUtil.getId(), model.getVendor().getVendorId());
 			if (StringUtil.stringToNull(refId) == null) {
 				throw new AuthorizationException();
 			}
@@ -205,13 +205,13 @@ public class ProductAction extends CommonAction implements InterfaceAction, Mode
 			result = manageEdit(conn, model, ResultType.BASIC);
 
 			//3.บันทึกเพิ่มข้อมูล
-			ItemManager manager = new ItemManager(conn, getUser(), loggerInititial());
-			model.getItem().setItemId(refId);
-			manager.edit(model.getItem());
+			VendorManager manager = new VendorManager(conn, getUser(), loggerInititial());
+			model.getVendor().setVendorId(refId);
+			manager.edit(model.getVendor());
 
 			//4.เคลียร์ค่าหน้าเพิ่มทั้งหมด
-			model.setItem(new Item());		
-
+			model.setVendor(new Vendor());	
+			
 			//retrieve Criteria temp
 			SearchCriteria criteria = retrieveCriteria(model.getCriteriaKeyTemp());
 			model.setCriteria(criteria);
@@ -242,7 +242,7 @@ public class ProductAction extends CommonAction implements InterfaceAction, Mode
 		CCTConnection conn = null;
 		
 		try {
-			String refId = ReferrerUtil.convertReferrerToId(getUser().getUserName(), SessionUtil.getId(), model.getItem().getItemId());
+			String refId = ReferrerUtil.convertReferrerToId(getUser().getUserName(), SessionUtil.getId(), model.getVendor().getVendorId());
 			if (StringUtil.stringToNull(refId) == null) {
 				throw new AuthorizationException();
 			}
@@ -254,8 +254,8 @@ public class ProductAction extends CommonAction implements InterfaceAction, Mode
 			result = manageGotoEdit(conn, model);
 			
 			//3.ค้นหาข้อมูลตาม id ที่เลือกมาจากหน้าจอ
-			ItemManager manager = new ItemManager(conn, getUser(), loggerInititial());
-			model.setItem(manager.searchById(refId));
+			VendorManager manager = new VendorManager(conn, getUser(), loggerInititial());
+			model.setVendor(manager.searchById(refId));
 			
 		} catch (Exception e) {
 			//5.จัดการ exception กรณีที่มี exception เกิดขึ้นในระบบ
@@ -297,7 +297,7 @@ public class ProductAction extends CommonAction implements InterfaceAction, Mode
 			//2.ตรวจสอบสิทธิ์ 
 			manageUpdateActive(conn, model, ResultType.BASIC);
 			
-			ItemManager manager = new ItemManager(conn, getUser(), loggerInititial());
+			VendorManager manager = new VendorManager(conn, getUser(), loggerInititial());
 			
 			//3.update สภานะ
 			if(model.getCriteria().getSelectedIds()!=null && !model.getCriteria().getSelectedIds().equals("")){
@@ -309,7 +309,7 @@ public class ProductAction extends CommonAction implements InterfaceAction, Mode
 			}
 
 			result = manageSearchAjax(conn, model, model.getCriteria(), getPF_CODE().getSearchFunction());
-			List<ItemSearch> lstResult = manager.search(model.getCriteria());
+			List<VendorSearch> lstResult = manager.search(model.getCriteria());
 			manageSearchResult(model, lstResult);
 
 		} catch (Exception e) {
@@ -322,13 +322,8 @@ public class ProductAction extends CommonAction implements InterfaceAction, Mode
 		}
 
 		return result;
-	} 
-	
-	@Override
-	public String delete() throws AuthorizationException {
-		return null;
 	}
-	
+
 	public String changeDelete() throws AuthorizationException {
 		loggerInititial().info("changeDelete");
 		
@@ -342,7 +337,7 @@ public class ProductAction extends CommonAction implements InterfaceAction, Mode
 			//2.ตรวจสอบสิทธิ์ หน้าเพิ่ม
 			manageDelete(conn, model, ResultType.BASIC);
 			
-			ItemManager manager = new ItemManager(conn, getUser(), loggerInititial());
+			VendorManager manager = new VendorManager(conn, getUser(), loggerInititial());
 			
 			//3.update Deleted flag
 			if(model.getCriteria().getSelectedIds()!=null && !model.getCriteria().getSelectedIds().equals("")){
@@ -354,7 +349,7 @@ public class ProductAction extends CommonAction implements InterfaceAction, Mode
 			}
 
 			result = manageSearchAjax(conn, model, model.getCriteria(), getPF_CODE().getSearchFunction());
-			List<ItemSearch> lstResult = manager.search(model.getCriteria());
+			List<VendorSearch> lstResult = manager.search(model.getCriteria());
 			manageSearchResult(model, lstResult);
 
 		} catch (Exception e) {
@@ -368,18 +363,7 @@ public class ProductAction extends CommonAction implements InterfaceAction, Mode
 
 		return result;
 	}
-
-	@Override
-	public String export() throws AuthorizationException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void showTransaction(Transaction transaction) {
-		// TODO Auto-generated method stub
-	}
-
+	
 	/**
 	 * สำหรับปิดหน้าจอ และยกเลิก
 	 */
@@ -403,7 +387,25 @@ public class ProductAction extends CommonAction implements InterfaceAction, Mode
 	}
 	
 	@Override
-	protected Logger loggerInititial() {
-		return LogUtil.PRODUCT;
+	public String delete() throws AuthorizationException {
+		// TODO Auto-generated method stub
+		return null;
 	}
+
+	@Override
+	public String export() throws AuthorizationException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void showTransaction(Transaction transaction) {
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	protected Logger loggerInititial() {
+		return LogUtil.VENDOR;
+	}
+	
 }

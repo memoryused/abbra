@@ -23,7 +23,7 @@ public enum PFCode {
 			+ FunctionType.DELETE + "':'10200105','" 
 			+ FunctionType.CHANGE + "':'10200106'}"
 			),
-	VENDER("10200200", "{'" + FunctionType.SEARCH + "':'10200201', '" 
+	VENDOR("10200200", "{'" + FunctionType.SEARCH + "':'10200201', '" 
 			+ FunctionType.ADD + "':'10200202','" 
 			+ FunctionType.EDIT + "':'10200203','" 
 			+ FunctionType.VIEW + "':'10200204','" 

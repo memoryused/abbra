@@ -3,7 +3,6 @@ package com.sit.common;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.Serializable;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
@@ -16,6 +15,14 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.dispatcher.mapper.ActionMapping;
 
+import com.opensymphony.xwork2.ActionContext;
+import com.opensymphony.xwork2.ActionSupport;
+import com.opensymphony.xwork2.util.ValueStack;
+import com.sit.app.core.config.parameter.domain.ParameterConfig;
+import com.sit.app.core.security.authorization.domain.Authorize;
+import com.sit.app.core.security.authorization.domain.PFCode;
+import com.sit.app.core.security.authorization.service.AuthorizationService;
+import com.sit.common.CommonModel.PageType;
 import com.sit.domain.GlobalVariable;
 import com.sit.domain.SearchCriteria;
 import com.sit.exception.AuthenticateException;
@@ -24,16 +31,6 @@ import com.sit.exception.DuplicateException;
 import com.sit.exception.MaxExceedAlertException;
 import com.sit.exception.MaxExceedException;
 import com.sit.exception.MaxExceedReportException;
-
-import com.sit.app.core.config.parameter.domain.ParameterConfig;
-import com.sit.app.core.security.authorization.domain.Authorize;
-import com.sit.app.core.security.authorization.domain.PFCode;
-import com.sit.app.core.security.authorization.service.AuthorizationService;
-
-import com.opensymphony.xwork2.ActionContext;
-import com.opensymphony.xwork2.ActionSupport;
-import com.opensymphony.xwork2.util.ValueStack;
-import com.sit.common.CommonModel.PageType;
 
 import util.database.CCTConnection;
 import util.file.FileManagerUtil;

@@ -612,6 +612,7 @@ a:hover i{
     -ms-flex: 1 1 auto;
     flex: 1 1 auto;
     padding: 0.5rem;
+    margin: 1rem;
 }
 .modal-content{
 	font-family: 'Kanit';

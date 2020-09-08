@@ -31,3 +31,15 @@ searchMailControl{
 	SELECT Email_id, Sender_1, CC_1, CC_2, Send_notif, M_Email_Controlcol 
 	FROM [OC].m_email_control
 }
+
+searchOrganizationSelectItem{
+	SELECT organization_id, organization_name
+	FROM [OC].m_organization
+	where active = 'Y'
+}
+
+searchPrefixSelectItem{
+	SELECT prefix_id, prefix_name
+	FROM [OC].m_prefix
+	where active = 'Y'
+}

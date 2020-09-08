@@ -11,6 +11,7 @@ import com.sit.abstracts.AbstractDAO;
 import com.sit.app.core.master.product.domain.Item;
 import com.sit.app.core.master.product.domain.ItemSearch;
 import com.sit.app.core.master.product.domain.ItemSearchCriteria;
+import com.sit.app.core.master.vendor.domain.Vendor;
 import com.sit.common.CommonUser;
 
 import util.database.CCTConnection;
@@ -155,13 +156,58 @@ public class ItemDAO extends AbstractDAO<ItemSearchCriteria, ItemSearch, Item, C
 		return item;
 	}
 
+	protected List<Vendor> searchVenderByItemId(CCTConnection conn, String id, CommonUser user) throws Exception {
+		log.info("searchVenderByItemId");
+		
+		List<Vendor> listVendor = new ArrayList<Vendor>();
+		
+		String sql = SQLUtil.getSQLString(
+				conn.getSchemas()
+				, getSqlPath().getClassName()
+				, getSqlPath().getPath()
+				, "searchVenderByItemId"
+				, StringUtil.replaceSpecialString(id, conn.getDbType(), ResultType.EMPTY)
+				);
+
+		log.debug(sql);
+		
+		Statement stmt = null;
+		ResultSet rst = null;
+		try {
+			stmt = conn.createStatement();
+			rst = stmt.executeQuery(sql);
+			
+			while (rst.next()) {
+				Vendor result = new Vendor();
+				result.setId(rst.getString("vendor_id"));
+				result.setVendorCode(StringUtil.nullToString(rst.getString("vendor_code")));
+				result.setVendorName(StringUtil.nullToString(rst.getString("vendor_name")));
+				result.getActive().setDesc(StringUtil.nullToString(rst.getString("Active").equals("Y")? "ACTIVE" : "INACTIVE"));
+				result.getActive().setCode(StringUtil.nullToString(rst.getString("Active")));
+				listVendor.add(result);
+			}
+		} catch (Exception e) {
+			throw e;
+			
+		} finally {
+			CCTConnectionUtil.closeAll(rst, stmt);
+		}
+		
+		return listVendor;
+	}
+	
 	@Override
 	protected int add(CCTConnection conn, Item obj, CommonUser user) throws Exception {
+		return 0;
+	}
+	
+	protected int add(CCTConnection conn, Long itemId, Item obj, CommonUser user) throws Exception {
 		log.info("add");
 		
 		int paramIndex = 0;
 
-		Object[] params = new Object[4];
+		Object[] params = new Object[5];
+		params[paramIndex++] = itemId;
 		params[paramIndex++] = StringUtil.replaceSpecialString(obj.getItemCode(), conn.getDbType(), ResultType.NULL);
 		params[paramIndex++] = StringUtil.replaceSpecialString(obj.getItemShortName(), conn.getDbType(), ResultType.NULL);
 		params[paramIndex++] = StringUtil.replaceSpecialString(obj.getStatus(), conn.getDbType(), ResultType.NULL);
@@ -224,12 +270,18 @@ public class ItemDAO extends AbstractDAO<ItemSearchCriteria, ItemSearch, Item, C
 	protected int delete(CCTConnection conn, String ids, CommonUser user) throws Exception {
 		log.info("delete");
 		
+		int paramIndex = 0;
+
+		Object[] params = new Object[2];
+		params[paramIndex++] = StringUtil.replaceSpecialString(user.getUserId(), conn.getDbType(), ResultType.NULL);
+		params[paramIndex++] = StringUtil.replaceSpecialString(ids, conn.getDbType(), ResultType.EMPTY);
+		
 		String sql = SQLUtil.getSQLString(
 				conn.getSchemas()
 				, getSqlPath().getClassName()
 				, getSqlPath().getPath()
 				, "deleteItem"
-				, StringUtil.replaceSpecialString(ids, conn.getDbType(), ResultType.EMPTY)
+				, params
 				);
 		
 		log.debug(sql);
@@ -256,8 +308,9 @@ public class ItemDAO extends AbstractDAO<ItemSearchCriteria, ItemSearch, Item, C
 		log.info("setActiveStatus");
 		
 		int paramIndex = 0;
-		Object[] params = new Object[2];
+		Object[] params = new Object[3];
 		params[paramIndex++] = activeFlag;
+		params[paramIndex++] = StringUtil.replaceSpecialString(user.getUserId(), conn.getDbType(), ResultType.NULL);
 		params[paramIndex++] = StringUtil.replaceSpecialString(ids, conn.getDbType(), ResultType.EMPTY);
 
 		String sql = SQLUtil.getSQLString(
@@ -328,4 +381,141 @@ public class ItemDAO extends AbstractDAO<ItemSearchCriteria, ItemSearch, Item, C
 		return checkDup;
 	}
 
+	/**
+	 * Select Item SEQ
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	protected long getItemSEQ(CCTConnection conn) throws Exception {
+		
+		long result = 0;
+
+		String sql = SQLUtil.getSQLString(
+				conn.getSchemas()
+				, getSqlPath().getClassName()
+				, getSqlPath().getPath()
+				, "getItemSEQ"
+				);
+		
+		log.debug(sql);
+
+		Statement stmt = null;
+		ResultSet rst = null;
+		try {
+			stmt = conn.createStatement();
+			rst = stmt.executeQuery(sql);
+			
+			if (rst.next()) {
+				result = rst.getLong("Item_ID_SEQ");
+			}
+
+		} catch (Exception e) {
+			throw e;
+		} finally {
+			CCTConnectionUtil.closeAll(rst, stmt);
+		}
+
+		return result;
+	}
+	
+	public void insertVendorItemMap(CCTConnection conn, long vendorId, long itemId, CommonUser user) throws Exception {
+		log.info("insertVendorItemMap");
+		
+		int paramIndex = 0;
+		Object[] params = new Object[2];
+		params[paramIndex++] = vendorId;
+		params[paramIndex++] = itemId;
+		
+		String sql = SQLUtil.getSQLString(
+				conn.getSchemas()
+				, getSqlPath().getClassName()
+				, getSqlPath().getPath()
+				, "insertVendorItemMap"
+				, params);
+
+		log.debug(sql);
+		
+		Statement stmt = null;
+
+		try {
+			stmt = conn.createStatement();
+			stmt.executeUpdate(sql);
+		} catch (Exception e) {
+			throw e;
+		} finally {
+			CCTConnectionUtil.closeStatement(stmt);
+		}
+	}
+	
+	public boolean checkDupVendorItemMap(CCTConnection conn, long venderId, long itemId) throws Exception {
+		
+		boolean checkDup = false;
+		long result = 0;
+		
+		int paramIndex = 0;
+		Object[] params = new Object[2];
+		params[paramIndex++] = venderId;
+		params[paramIndex++] = itemId;
+		
+		String sql = SQLUtil.getSQLString(
+				conn.getSchemas()
+				, getSqlPath().getClassName()
+				, getSqlPath().getPath()
+				, "checkDupVendorItemMap"
+				, params
+				);
+		
+		log.debug(sql);
+
+		Statement stmt = null;
+		ResultSet rst = null;
+		try {
+			stmt = conn.createStatement();
+			rst = stmt.executeQuery(sql);
+			
+			if (rst.next()) {
+				result = rst.getLong("CNT");
+			}
+
+			if(result != 0){
+				checkDup = true;
+			}
+		} catch (Exception e) {
+			throw e;
+		} finally {
+			CCTConnectionUtil.closeAll(rst, stmt);
+		}
+
+		return checkDup;
+	}
+	
+	public void deleteVendorItemMapById(CCTConnection conn, long venderId, long itemId, CommonUser user) throws Exception {
+		log.info("deleteVendorItemMapById");
+		
+		int paramIndex = 0;
+		Object[] params = new Object[2];
+		params[paramIndex++] = venderId;
+		params[paramIndex++] = itemId;
+		
+		String sql = SQLUtil.getSQLString(
+				conn.getSchemas()
+				, getSqlPath().getClassName()
+				, getSqlPath().getPath()
+				, "deleteVendorItemMapById"
+				, params);
+
+		log.debug(sql);
+		
+		Statement stmt = null;
+
+		try {
+			stmt = conn.createStatement();
+			stmt.executeUpdate(sql);
+		} catch (Exception e) {
+			throw e;
+		} finally {
+			CCTConnectionUtil.closeStatement(stmt);
+		}
+	}
 }

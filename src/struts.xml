@@ -25,6 +25,7 @@
 	<!-- Resource bundle -->
 
 	<include file="strutsconfig/common/struts-common.xml" />
+	<include file="strutsconfig/dialog/struts-dialog.xml" />
 	<include file="strutsconfig/security/struts-security.xml" />
 	<include file="strutsconfig/master/struts-master.xml" />
 	<include file="strutsconfig/product/struts-product.xml" />

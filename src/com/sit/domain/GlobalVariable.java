@@ -37,6 +37,7 @@ public class GlobalVariable implements Serializable {
 
 	public static final String FLAG_ACTIVE = "Y";
 	public static final String FLAG_INACTIVE = "N";
+	public static final String FLAG_DELETED = "Y";
 
 	public static final String SYSTEM = "UCP";
 	public static final int RPP_DEFAULT = 100;

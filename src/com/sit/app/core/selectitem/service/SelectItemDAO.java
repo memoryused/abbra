@@ -287,6 +287,104 @@ public class SelectItemDAO extends AbstractDAO<Object, Object, Object, Object> {
 	}
 	
 	/**
+	 * Lock Status [COMBOBOX]
+	 * @return
+	 * @throws Exception
+	 */
+	protected List<CommonSelectItem> searchLockStatusSelectItem() throws Exception {
+		List<CommonSelectItem> listSelectItem = new ArrayList<CommonSelectItem>();
+		
+		try {
+			CommonSelectItem selectItem = new CommonSelectItem();
+			selectItem.setKey("1");
+			selectItem.setValue("Ready");
+			listSelectItem.add(selectItem);
+			
+			selectItem = new CommonSelectItem();
+			selectItem.setKey("2");
+			selectItem.setValue("Locked");
+			listSelectItem.add(selectItem);
+			
+		} catch (Exception e) {
+			throw e;
+		} finally {
+		}
+		return listSelectItem;
+	}
+	
+	/**
+	 * Organization [COMBOBOX]
+	 * @return
+	 * @throws Exception
+	 */
+	protected List<CommonSelectItem> searchOrganizationSelectItem(CCTConnection conn) throws Exception {
+		List<CommonSelectItem> listSelectItem = new ArrayList<CommonSelectItem>();
+
+		String sql = SQLUtil.getSQLString(conn.getSchemas()
+											, getSqlPath().getClassName()
+											, getSqlPath().getPath()
+											, "searchOrganizationSelectItem"
+											);
+		//log.debug("[ SQL STANDARD SELECT_ITEM ] : \n\n"+sql+"\n\n");
+
+		Statement stmt = null;
+		ResultSet rst = null;
+
+		try {
+			stmt = conn.createStatement();
+			rst = stmt.executeQuery(sql);
+			while (rst.next()) {
+				CommonSelectItem selectItem = new CommonSelectItem();
+				selectItem.setKey(StringUtil.nullToString(rst.getString("organization_id")));
+				selectItem.setValue(StringUtil.nullToString(rst.getString("organization_name")));
+				listSelectItem.add(selectItem);
+			}
+
+		} catch (Exception e) {
+			throw e;
+		} finally {
+			CCTConnectionUtil.closeAll(rst, stmt);
+		}
+		return listSelectItem;
+	}
+	
+	/**
+	 * Prefix [COMBOBOX]
+	 * @return
+	 * @throws Exception
+	 */
+	protected List<CommonSelectItem> searchPrefixSelectItem(CCTConnection conn) throws Exception {
+		List<CommonSelectItem> listSelectItem = new ArrayList<CommonSelectItem>();
+
+		String sql = SQLUtil.getSQLString(conn.getSchemas()
+											, getSqlPath().getClassName()
+											, getSqlPath().getPath()
+											, "searchPrefixSelectItem"
+											);
+		//log.debug("[ SQL STANDARD SELECT_ITEM ] : \n\n"+sql+"\n\n");
+
+		Statement stmt = null;
+		ResultSet rst = null;
+
+		try {
+			stmt = conn.createStatement();
+			rst = stmt.executeQuery(sql);
+			while (rst.next()) {
+				CommonSelectItem selectItem = new CommonSelectItem();
+				selectItem.setKey(StringUtil.nullToString(rst.getString("prefix_id")));
+				selectItem.setValue(StringUtil.nullToString(rst.getString("prefix_name")));
+				listSelectItem.add(selectItem);
+			}
+
+		} catch (Exception e) {
+			throw e;
+		} finally {
+			CCTConnectionUtil.closeAll(rst, stmt);
+		}
+		return listSelectItem;
+	}
+	
+	/**
 	 * @deprecated ไม่ใช้งาน
 	 * */
 	@Override

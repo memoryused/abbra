@@ -5,6 +5,8 @@ import java.util.Map;
 
 import com.sit.domain.Operator;
 
+import util.string.StringUtil;
+
 public class MenuUtil {
 	private static final String BEGIN_LI = "<li>";
 	private static final String END_LI = "</li>";
@@ -207,7 +209,7 @@ public class MenuUtil {
 			return labelHeader;
 		}
 
-		while (mapMenu.get(functionCode).getParentId() != null && !mapMenu.get(functionCode).getParentId().equals("")) {
+		while (mapMenu.get(functionCode) != null && (mapMenu.get(functionCode).getParentId() != null && !mapMenu.get(functionCode).getParentId().equals(""))) {
 			Operator operator = mapMenu.get(functionCode);
 
 			if (operator != null) {
@@ -219,8 +221,8 @@ public class MenuUtil {
 			}
 		}
 
-		labelHeader = "&nbsp;&rsaquo;&nbsp;" + labelHeader;
-		labelHeader = mapMenu.get(functionCode).getLabel() + labelHeader;
+		labelHeader = "<br>" + labelHeader;
+		labelHeader = mapMenu.get(functionCode) == null ? labelHeader : mapMenu.get(functionCode).getLabel() + labelHeader;
 
 		return labelHeader;
 	}

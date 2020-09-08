@@ -5,6 +5,7 @@ import resources.sql.selectitem.SelectItemSQL;
 import resources.sql.security.SecuritySQL;
 import resources.sql.product.ProductSQL;
 import resources.sql.master.MasterSQL;
+import resources.sql.dialog.DialogSQL;
 
 public enum SQLPath implements Serializable {
 	/**
@@ -16,6 +17,14 @@ public enum SQLPath implements Serializable {
 	, PRODUCT_INFO(ProductSQL.class, "resources/sql/product/ProductInfo.sql")
 	, ITEM(MasterSQL.class, "resources/sql/master/Item.sql")
 	, VENDOR(MasterSQL.class, "resources/sql/master/Vendor.sql")
+	, MEMBER(SecuritySQL.class, "resources/sql/security/Member.sql")
+	, MEMBER_GROUP(SecuritySQL.class, "resources/sql/security/MemberGroup.sql")
+	
+	, DIALOG_GROUP_SQL(DialogSQL.class, "resources/sql/dialog/GroupDialog.sql")
+	, DIALOG_OPERATOR_SQL(DialogSQL.class, "resources/sql/dialog/Operator.sql")
+	, DIALOG_USER_SQL(DialogSQL.class, "resources/sql/dialog/UserDialog.sql")
+	, DIALOG_VENDOR_SQL(DialogSQL.class, "resources/sql/dialog/VendorDialog.sql")
+	, DIALOG_ITEM_SQL(DialogSQL.class, "resources/sql/dialog/ItemDialog.sql")
 	;
 
 	private String path;

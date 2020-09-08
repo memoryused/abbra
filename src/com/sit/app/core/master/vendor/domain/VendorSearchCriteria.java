@@ -21,7 +21,6 @@ public class VendorSearchCriteria extends SearchCriteria{
 				, new HeaderSorts("", HeaderSorts.ASC, "0")
 				, new HeaderSorts("vh.vendor_code", HeaderSorts.ASC, "0")
 				, new HeaderSorts("vh.vendor_name", HeaderSorts.ASC, "0")
-				, new HeaderSorts("vh.vendor_short_name", HeaderSorts.ASC, "0")
 				, new HeaderSorts("vh.active", HeaderSorts.ASC, "0")
 		};
 		
@@ -34,7 +33,6 @@ public class VendorSearchCriteria extends SearchCriteria{
 			new HeaderSorts("", HeaderSorts.DESC), 
 			new HeaderSorts("", HeaderSorts.DESC), 
 			new HeaderSorts("", HeaderSorts.DESC), 
-			new HeaderSorts("", HeaderSorts.DESC),
 			new HeaderSorts("", HeaderSorts.DESC)
 	};
 	

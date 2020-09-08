@@ -12,11 +12,15 @@
 		<!-- Member -->
 		<action name="*Member" class="com.sit.app.web.security.member.action.MemberAction" method="{1}">
 			<result name="init">/jsp/security/member/membersearch.jsp</result>
+			<result name="search">/jsp/security/member/membersearch.jsp</result>
+			<result name="addEdit">/jsp/security/member/memberaddedit.jsp</result>
 		</action>
 		
 		<!-- Member Group -->
 		<action name="*MemberGroup" class="com.sit.app.web.security.membergroup.action.MemberGroupAction" method="{1}">
 			<result name="init">/jsp/security/membergroup/membergroupsearch.jsp</result>
+			<result name="search">/jsp/security/membergroup/membergroupsearch.jsp</result>
+			<result name="addEdit">/jsp/security/membergroup/membergroupaddedit.jsp</result>
 		</action>
 		
 	</package>

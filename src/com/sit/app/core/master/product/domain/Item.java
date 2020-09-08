@@ -1,8 +1,12 @@
 package com.sit.app.core.master.product.domain;
 
-import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
-public class Item implements Serializable{
+import com.sit.app.core.master.vendor.domain.Vendor;
+import com.sit.common.CommonDomain;
+
+public class Item extends CommonDomain{
 
 	private static final long serialVersionUID = 1L;
 
@@ -11,6 +15,9 @@ public class Item implements Serializable{
 	private String itemShortName;
 	private String status;
 	
+	// tab vendor
+	private List<Vendor> listVendor = new ArrayList<Vendor>();
+		
 	public String getItemId() {
 		return itemId;
 	}
@@ -34,6 +41,12 @@ public class Item implements Serializable{
 	}
 	public void setStatus(String status) {
 		this.status = status;
+	}
+	public List<Vendor> getListVendor() {
+		return listVendor;
+	}
+	public void setListVendor(List<Vendor> listVendor) {
+		this.listVendor = listVendor;
 	}
 	
 }

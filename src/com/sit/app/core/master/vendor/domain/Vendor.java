@@ -1,8 +1,12 @@
 package com.sit.app.core.master.vendor.domain;
 
-import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
-public class Vendor implements Serializable{
+import com.sit.app.core.master.product.domain.Item;
+import com.sit.common.CommonDomain;
+
+public class Vendor extends CommonDomain{
 
 	private static final long serialVersionUID = 294444732951794846L;
 
@@ -11,6 +15,8 @@ public class Vendor implements Serializable{
 	private String vendorName;
 	private String vendorShortName;
 	private String status;
+	
+	private List<Item> listProduct = new ArrayList<>();
 	
 	public String getVendorId() {
 		return vendorId;
@@ -41,5 +47,11 @@ public class Vendor implements Serializable{
 	}
 	public void setStatus(String status) {
 		this.status = status;
+	}
+	public List<Item> getListProduct() {
+		return listProduct;
+	}
+	public void setListProduct(List<Item> listProduct) {
+		this.listProduct = listProduct;
 	}
 }

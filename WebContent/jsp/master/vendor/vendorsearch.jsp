@@ -7,7 +7,7 @@
 function sf(){}
 
 jQuery(document).ready(function(){
-	alert("<s:property value='criteriaKeyTemp' />");
+	
 	jQuery("#icon-add").click(function(e){
 		addPage();
 	});
@@ -111,6 +111,30 @@ function editPage(selectedId){
 				
 					<div class="col-md-12">
 						<div class="md-form">
+							<s:textfield id="criteria_vendorCode" name="criteria.vendorCode" cssClass="form-control clearform"/>
+							<label for="criteria_vendorCode"><s:text name='prd.venderCode'/></label> 
+						</div>
+					</div>
+				
+				</div>
+				<div class="col-std-2">
+				
+					<div class="col-md-12">
+						<div class="md-form">
+							<s:textfield id="criteria_vendorShortName" name="criteria.vendorShortName" cssClass="form-control clearform"/>
+							<label for="criteria_vendorShortName"><s:text name='prd.venderShortName'/></label> 
+						</div>
+					</div>
+				
+				</div>
+				<div class="col-std"></div>
+			</div>
+			<div class="row">
+				<div class="col-std"></div>	
+				<div class="col-std-2">
+				
+					<div class="col-md-12">
+						<div class="md-form">
 							<s:select id="criteria_vendorId_autocomplete"
 								list="listVendor"
 								headerKey=""
@@ -129,20 +153,6 @@ function editPage(selectedId){
 				
 					<div class="col-md-12">
 						<div class="md-form">
-							<s:textfield id="criteria_vendorCode" name="criteria.vendorCode" cssClass="form-control clearform"/>
-							<label for="criteria_vendorCode"><s:text name='prd.venderCode'/></label> 
-						</div>
-					</div>
-				
-				</div>
-				<div class="col-std"></div>
-			</div>
-			<div class="row">
-				<div class="col-std"></div>	
-				<div class="col-std-2">
-				
-					<div class="col-md-12">
-						<div class="md-form">
 							<s:select id="listStatus"
 								list="listStatus"
 								name="criteria.status"
@@ -156,6 +166,11 @@ function editPage(selectedId){
 					</div>
 				
 				</div>
+				<div class="col-std"></div>
+			</div>
+			
+			<div class="row">
+				<div class="col-std"></div>	
 				<div class="col-std-2">
 				
 					<div class="col-md-12">
@@ -170,6 +185,7 @@ function editPage(selectedId){
 					</div>
 					
 				</div>
+				<div class="col-std-2"></div>
 				<div class="col-std"></div>
 			</div>
 			

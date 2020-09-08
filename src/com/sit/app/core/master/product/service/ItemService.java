@@ -9,9 +9,12 @@ import com.sit.app.core.config.parameter.domain.SQLPath;
 import com.sit.app.core.master.product.domain.Item;
 import com.sit.app.core.master.product.domain.ItemSearch;
 import com.sit.app.core.master.product.domain.ItemSearchCriteria;
+import com.sit.app.core.master.vendor.domain.Vendor;
 import com.sit.common.CommonUser;
+import com.sit.domain.GlobalVariable;
 import com.sit.exception.DuplicateException;
 
+import util.APPSUtil;
 import util.database.CCTConnection;
 
 public class ItemService extends AbstractService{
@@ -33,7 +36,10 @@ public class ItemService extends AbstractService{
 	}
 	
 	protected Item searchById(String id) throws Exception{
-		return dao.searchById(conn, id, user);
+		Item item = new Item();
+		item = dao.searchById(conn, id, user);
+		item.setListVendor(dao.searchVenderByItemId(conn, id, user));
+		return item;
 	}
 	
 	protected void checkDup(Item item) throws Exception {
@@ -49,11 +55,49 @@ public class ItemService extends AbstractService{
 	}
 	
 	protected int add(Item item) throws Exception {
-		return dao.add(conn, item, user);
+		// หา pk
+		long itemId = dao.getItemSEQ(conn);
+		
+		// บันทึกข้อมูล item
+		dao.add(conn, itemId, item, user);
+		
+		// วน Loop บันทึกเพิ่ม vendor
+		insertVendorItemMap(itemId, item.getListVendor());
+		
+		return 0;
+	}
+	
+	protected void insertVendorItemMap(long itemId, List<Vendor> listVendor) throws Exception {
+		for (Vendor vendor : listVendor) {
+			if(vendor.getDeleteFlag().equals(GlobalVariable.FLAG_DELETED)) {
+				continue;
+			}
+			
+			dao.insertVendorItemMap(conn, APPSUtil.convertLongValue(vendor.getId()), itemId, user);
+		}
 	}
 	
 	protected int edit(Item item) throws Exception {
-		return dao.edit(conn, item, user);
+		dao.edit(conn, item, user);
+		
+		editVendorItemMap(APPSUtil.convertLongValue(item.getItemId()), item.getListVendor());
+		
+		return 0;
+	}
+	
+	protected void editVendorItemMap(long itemId, List<Vendor> listVendor) throws Exception {
+		for (Vendor vendor : listVendor) {
+			if(vendor.getDeleteFlag().equals(GlobalVariable.FLAG_DELETED)) {
+				dao.deleteVendorItemMapById(conn, APPSUtil.convertLongValue(vendor.getId()), itemId, user);
+			} else {
+				//check dup
+				if(dao.checkDupVendorItemMap(conn, APPSUtil.convertLongValue(vendor.getId()), itemId)) {
+					continue;
+				} else {
+					dao.insertVendorItemMap(conn, APPSUtil.convertLongValue(vendor.getId()), itemId, user);
+				}
+			}
+		}
 	}
 	
 	protected int setActiveStatus(String ids, String activeFlag) throws Exception {

@@ -158,10 +158,10 @@
 	
 	SitDataTableDialog.prototype.multiChoose = function() {
 		var that = this
-		var selectIds = $(that.table).sitDataTable("getSelectedIds")
+		var selectIds = $("#" + that.options.table).sitDataTable("getSelectedIds")
 		
 		if(selectIds.length == 0){
-			alert("<s:text name='10038' />")
+			alert(validateMessage.CODE_10001);
 			return
 		}
 		

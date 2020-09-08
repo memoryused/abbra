@@ -36,7 +36,7 @@ function manageModal(){
 
 		modalHTML += '<div class="'+ jQuery(this).attr("class") +' fade" id="'+ id +'" tabindex="-1" role="dialog" aria-hidden="true">';
 		if(typeof modaldialog === "undefined"){
-			modalHTML += '<div class="modal-dialog">';
+			modalHTML += '<div class="modal-dialog modal-lg">';
 		} else{
 			modalHTML += '<div class="'+ modaldialog +'" role="document">';
 		}

@@ -82,4 +82,31 @@ public class SelectItemService extends AbstractService {
 	protected MailControl searchMailControl() throws Exception {
 		return dao.searchMailControl(conn);
 	}
+	
+	/**
+	 * Lock Status [COMBOBOX]
+	 * @return
+	 * @throws Exception
+	 */
+	protected List<CommonSelectItem> searchLockStatusSelectItem() throws Exception {
+		return dao.searchLockStatusSelectItem();
+	}
+	
+	/**
+	 * Organization [COMBOBOX]
+	 * @return
+	 * @throws Exception
+	 */
+	protected List<CommonSelectItem> searchOrganizationSelectItem() throws Exception {
+		return dao.searchOrganizationSelectItem(conn);
+	}
+	
+	/**
+	 * Prefix [COMBOBOX]
+	 * @return
+	 * @throws Exception
+	 */
+	protected List<CommonSelectItem> searchPrefixSelectItem() throws Exception {
+		return dao.searchPrefixSelectItem(conn);
+	}
 }

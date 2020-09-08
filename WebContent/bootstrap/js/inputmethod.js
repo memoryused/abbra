@@ -408,7 +408,7 @@ function showNotifyMessageValidate(myMessage) {
 }
 
 function showNotifyMessage(myType, myTitle, myMessage, myError) {
-	console.log("Fuck myType : "+myType);
+
 	clearNotifyMessage();
 	
 	var myTitle = "";

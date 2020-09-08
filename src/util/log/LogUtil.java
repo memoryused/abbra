@@ -12,10 +12,14 @@ public class LogUtil {
 	public static final Logger UTIL = Logger.getLogger("UTIL");
 	public static final Logger SESSION_LISTENER = Logger.getLogger("SESSION_LISTENER");
 	public static final Logger MAIL = Logger.getLogger("MAIL");
+	public static final Logger DIALOG = Logger.getLogger("DIALOG");
 	
 	public static final Logger PRODUCT_HOME = Logger.getLogger("PRODUCT_HOME");
 	public static final Logger PRODUCT_INFO = Logger.getLogger("PRODUCT_INFO");
 	
 	public static final Logger PRODUCT = Logger.getLogger("PRODUCT");
 	public static final Logger VENDOR = Logger.getLogger("VENDOR");
+	
+	public static final Logger MEMBER = Logger.getLogger("MEMBER");
+	public static final Logger MEMBER_GROUP = Logger.getLogger("MEMBER_GROUP");
 }

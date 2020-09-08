@@ -5,8 +5,10 @@
         <applicationLocaleString>en</applicationLocaleString>
         <databaseLocaleString>en</databaseLocaleString>
         <datetimeLocaleString>en</datetimeLocaleString>
+        <lppPopup>200</lppPopup>
         <lppString>100,200,300,400,500,600,700,800,900,1000</lppString>
         <maxExceed>1000</maxExceed> <!-- 1000 -->
+        <maxExceedPopup>200</maxExceedPopup> <!-- กรณีเป็นแบบ navigate ให้ทำการกำหนดค่าเดียวกับ maxExceed แต่ถ้าเป็นแบบไม่มี navigate ให้กำหนดค่า 600 -->
         <maxExceedReport>1000</maxExceedReport>
         <maxSearchLogHistory>2000</maxSearchLogHistory>
         <supportLocaleString>en</supportLocaleString>
@@ -32,7 +34,7 @@
         <databaseType>mysql</databaseType>
         <jndi>true</jndi>
         <lookup>jdbc/template_dc</lookup>
-        <schemas>[OC]:scl</schemas>
+        <schemas>[OC]:master</schemas>
     </database>
 
     <dateFormat>

@@ -40,6 +40,7 @@ public enum PFCode {
 			+ FunctionType.ADD + "':'10100402','" 
 			+ FunctionType.EDIT + "':'10100403','" 
 			+ FunctionType.VIEW + "':'10100404','" 
+			+ FunctionType.DELETE + "':'10100405','" 
 			+ FunctionType.RESETPASSWORD + "':'10100408','" 
 			+ FunctionType.CHANGE + "':'10100406'}"
 			),
@@ -47,7 +48,8 @@ public enum PFCode {
 			+ FunctionType.ADD + "':'10100502','" 
 			+ FunctionType.EDIT + "':'10100503','" 
 			+ FunctionType.VIEW + "':'10100504','" 
-			+ FunctionType.DELETE + "':'10100505'}" 
+			+ FunctionType.DELETE + "':'10100505','" 
+			+ FunctionType.CHANGE + "':'10100506'}" 
 			)
 	;
 	// ---------: Program code and Function code :-----------

@@ -8,6 +8,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import com.sit.abstracts.AbstractDAO;
+import com.sit.app.core.master.product.domain.Item;
 import com.sit.app.core.master.vendor.domain.Vendor;
 import com.sit.app.core.master.vendor.domain.VendorSearch;
 import com.sit.app.core.master.vendor.domain.VendorSearchCriteria;
@@ -34,9 +35,10 @@ public class VendorDAO extends AbstractDAO<VendorSearchCriteria, VendorSearch, V
 		long total = 0;
 		int paramIndex = 0;
 		
-		Object[] params = new Object[3];
+		Object[] params = new Object[4];
 		params[paramIndex++] = StringUtil.replaceSpecialString(criteria.getVendorId(), conn.getDbType(), ResultType.NULL);
 		params[paramIndex++] = StringUtil.replaceSpecialString(criteria.getVendorCode(), conn.getDbType(), ResultType.NULL);
+		params[paramIndex++] = StringUtil.replaceSpecialString(criteria.getVendorShortName(), conn.getDbType(), ResultType.NULL);
 		params[paramIndex++] = StringUtil.replaceSpecialString(criteria.getStatus(), conn.getDbType(), ResultType.NULL);
 		
 		String sql = SQLUtil.getSQLString(
@@ -74,9 +76,10 @@ public class VendorDAO extends AbstractDAO<VendorSearchCriteria, VendorSearch, V
 		
 		int paramIndex = 0;
 		
-		Object[] params = new Object[6];
+		Object[] params = new Object[7];
 		params[paramIndex++] = StringUtil.replaceSpecialString(criteria.getVendorId(), conn.getDbType(), ResultType.NULL);
 		params[paramIndex++] = StringUtil.replaceSpecialString(criteria.getVendorCode(), conn.getDbType(), ResultType.NULL);
+		params[paramIndex++] = StringUtil.replaceSpecialString(criteria.getVendorShortName(), conn.getDbType(), ResultType.NULL);
 		params[paramIndex++] = StringUtil.replaceSpecialString(criteria.getStatus(), conn.getDbType(), ResultType.NULL);
 		params[paramIndex++] = criteria.getOrderList();
 		params[paramIndex++] = criteria.getStart();
@@ -156,14 +159,59 @@ public class VendorDAO extends AbstractDAO<VendorSearchCriteria, VendorSearch, V
 		
 		return vendor;
 	}
+	
+	protected List<Item> searchProductByVendorId(CCTConnection conn, String id, CommonUser user) throws Exception {
+		log.info("searchProductByVendorId");
+		
+		List<Item> listProduct = new ArrayList<Item>();
+		
+		String sql = SQLUtil.getSQLString(
+				conn.getSchemas()
+				, getSqlPath().getClassName()
+				, getSqlPath().getPath()
+				, "searchProductByVendorId"
+				, StringUtil.replaceSpecialString(id, conn.getDbType(), ResultType.EMPTY)
+				);
+
+		log.debug(sql);
+		
+		Statement stmt = null;
+		ResultSet rst = null;
+		try {
+			stmt = conn.createStatement();
+			rst = stmt.executeQuery(sql);
+			
+			while (rst.next()) {
+				Item result = new Item();
+				result.setId(rst.getString("Item_id"));
+				result.setItemCode(StringUtil.nullToString(rst.getString("Item_code")));
+				result.setItemShortName(StringUtil.nullToString(rst.getString("item_short_name")));
+				result.getActive().setDesc(StringUtil.nullToString(rst.getString("Active").equals("Y")? "ACTIVE" : "INACTIVE"));
+				result.getActive().setCode(StringUtil.nullToString(rst.getString("Active")));
+				listProduct.add(result);
+			}
+		} catch (Exception e) {
+			throw e;
+			
+		} finally {
+			CCTConnectionUtil.closeAll(rst, stmt);
+		}
+		
+		return listProduct;
+	}
 
 	@Override
 	protected int add(CCTConnection conn, Vendor obj, CommonUser user) throws Exception {
+		return 0;
+	}
+		
+	protected int add(CCTConnection conn, long vendorId, Vendor obj, CommonUser user) throws Exception {
 		log.info("add");
 		
 		int paramIndex = 0;
 
-		Object[] params = new Object[5];
+		Object[] params = new Object[6];
+		params[paramIndex++] = vendorId;
 		params[paramIndex++] = StringUtil.replaceSpecialString(obj.getVendorCode(), conn.getDbType(), ResultType.NULL);
 		params[paramIndex++] = StringUtil.replaceSpecialString(obj.getVendorName(), conn.getDbType(), ResultType.NULL);
 		params[paramIndex++] = StringUtil.replaceSpecialString(obj.getVendorShortName(), conn.getDbType(), ResultType.NULL);
@@ -228,12 +276,17 @@ public class VendorDAO extends AbstractDAO<VendorSearchCriteria, VendorSearch, V
 	protected int delete(CCTConnection conn, String ids, CommonUser user) throws Exception {
 		log.info("delete");
 		
+		int paramIndex = 0;
+		Object[] params = new Object[2];
+		params[paramIndex++] = StringUtil.replaceSpecialString(user.getUserId(), conn.getDbType(), ResultType.NULL);
+		params[paramIndex++] = StringUtil.replaceSpecialString(ids, conn.getDbType(), ResultType.EMPTY);
+		
 		String sql = SQLUtil.getSQLString(
 				conn.getSchemas()
 				, getSqlPath().getClassName()
 				, getSqlPath().getPath()
 				, "deleteVendor"
-				, StringUtil.replaceSpecialString(ids, conn.getDbType(), ResultType.EMPTY)
+				, params
 				);
 		
 		log.debug(sql);
@@ -254,8 +307,9 @@ public class VendorDAO extends AbstractDAO<VendorSearchCriteria, VendorSearch, V
 		log.info("setActiveStatus");
 		
 		int paramIndex = 0;
-		Object[] params = new Object[2];
+		Object[] params = new Object[3];
 		params[paramIndex++] = activeFlag;
+		params[paramIndex++] = StringUtil.replaceSpecialString(user.getUserId(), conn.getDbType(), ResultType.EMPTY);
 		params[paramIndex++] = StringUtil.replaceSpecialString(ids, conn.getDbType(), ResultType.EMPTY);
 
 		String sql = SQLUtil.getSQLString(
@@ -331,6 +385,44 @@ public class VendorDAO extends AbstractDAO<VendorSearchCriteria, VendorSearch, V
 		}
 		
 		return checkDup;
+	}
+	
+	/**
+	 * Select Item SEQ
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	protected long getVendorSEQ(CCTConnection conn) throws Exception {
+		
+		long result = 0;
+
+		String sql = SQLUtil.getSQLString(
+				conn.getSchemas()
+				, getSqlPath().getClassName()
+				, getSqlPath().getPath()
+				, "getVendorSEQ"
+				);
+		
+		log.debug(sql);
+
+		Statement stmt = null;
+		ResultSet rst = null;
+		try {
+			stmt = conn.createStatement();
+			rst = stmt.executeQuery(sql);
+			
+			if (rst.next()) {
+				result = rst.getLong("VENDOR_ID_SEQ");
+			}
+
+		} catch (Exception e) {
+			throw e;
+		} finally {
+			CCTConnectionUtil.closeAll(rst, stmt);
+		}
+
+		return result;
 	}
 
 }

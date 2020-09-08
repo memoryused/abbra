@@ -2,10 +2,8 @@ package util;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.math.RoundingMode;
-import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -13,9 +11,13 @@ import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
@@ -25,9 +27,9 @@ import org.apache.struts2.ServletActionContext;
 
 import com.sit.app.core.config.parameter.domain.ParameterConfig;
 import com.sit.app.core.security.config.domain.ConfigSystem;
-import com.sit.app.core.security.login.domain.User;
 import com.sit.domain.FileMeta;
 import com.sit.domain.GlobalVariable;
+import com.sit.domain.Operator;
 
 import util.bundle.BundleUtil;
 import util.calendar.CalendarUtil;
@@ -40,6 +42,8 @@ import util.string.RandomUtil;
 import util.string.StringUtil;
 import util.type.CrytographyType.EncType;
 import util.type.DatabaseType.DbType;
+import util.web.MenuTreeUtil;
+import util.web.MenuUtil;
 
 public class APPSUtil {
 
@@ -1193,5 +1197,124 @@ public class APPSUtil {
 		dayDiff = (int) (diff / unit);
 	
 		return dayDiff;
+	}
+	
+	public static Object[] getListOperatorIdFromListOperator(List<Operator> listOperator) {
+		Map<String, String> mapOperator = new LinkedHashMap<String, String>();
+		if (listOperator != null) {
+			for (Operator operator : listOperator) {
+				String[] parentIdArray = operator.getParentIds().split(MenuTreeUtil.DELIMITER_FUNCTION);
+				if (operator.getDeleteFlag().equals(GlobalVariable.FLAG_DELETED)) {
+					continue;
+				}
+				for (String id : parentIdArray) {
+					mapOperator.put(id, id);
+				}
+			}
+		}
+		return (Object[]) (mapOperator.values().toArray());
+	}
+	
+	public static List<Operator> generateOperatorResult(Map<String, Operator> mapProgram) {
+		Object[] operators = (Object[]) (mapProgram.values().toArray());
+
+		Map<String, Operator> mapMenuLevel = new LinkedHashMap<String, Operator>();
+		if (operators.length > 0) {
+			int minLevel = ((Operator) operators[0]).getMinLevel();
+			int maxLevel = ((Operator) operators[0]).getMaxLevel();
+			for (int currentLevel = minLevel; currentLevel <= maxLevel; currentLevel++) {
+				for (int index = 0; index <= operators.length - 1; index++) {
+					Operator operator = (Operator) operators[index];
+
+					if (operator.getCurrentLevel() == currentLevel) {
+						if (operator.getCurrentLevel() == 1) {
+							mapMenuLevel.put(operator.getOperatorId(), operator);
+						} else {
+							String parentOperatorIds = searchParentOperator(operator.getParentId(), operators);
+							parentOperatorIds += MenuUtil.DELIMITER_FUNCTION + operator.getOperatorId();
+							if (operator.getOperatorType().equals(MenuUtil.OPERATOR_TYPE_FUNCTION)) {
+								operator.setParentIds(parentOperatorIds);
+								String fullPath = MenuUtil.searchLabel(mapProgram, operator.getCurrentId());
+								operator.setSystemName(fullPath.substring(0, fullPath.indexOf(HTML_BR)));
+								// LogUtil.SEC.debug("fullPath: " + fullPath);
+								if (fullPath.lastIndexOf(HTML_RSAQUO) > -1) {
+									operator.setMenuName(fullPath.substring(fullPath.indexOf(HTML_BR) + HTML_BR.length(), fullPath.lastIndexOf(HTML_RSAQUO)));
+									operator.setFunctionName(fullPath.substring(fullPath.lastIndexOf(HTML_RSAQUO) + HTML_RSAQUO.length(), fullPath.length()));
+								} else {
+									operator.setMenuName("");
+									operator.setFunctionName(fullPath.substring(fullPath.lastIndexOf(HTML_BR) + HTML_BR.length(), fullPath.length()));
+								}
+							}
+							updateOperator(mapProgram, mapMenuLevel, parentOperatorIds, parentOperatorIds);
+						}
+					}
+				}
+			}
+		}
+
+		return convertMapOperatorToListOperator(mapMenuLevel);
+	}
+	
+	private static List<Operator> convertMapOperatorToListOperator(Map<String, Operator> mapOperator) {
+
+		List<Operator> listOperator = new ArrayList<Operator>();
+		for (String key : mapOperator.keySet()) {
+			if (mapOperator.get(key).getOperatorType().equals(MenuUtil.OPERATOR_TYPE_FUNCTION)) {
+				Operator operator = mapOperator.get(key);
+				operator.setParentIds(operator.getParentIds().replaceAll(MenuUtil.DELIMITER_FUNCTION, MenuTreeUtil.DELIMITER_FUNCTION));
+				listOperator.add(operator);
+			}
+			if (mapOperator.get(key).getMapOperator().size() > 0) {
+				listOperator.addAll(convertMapOperatorToListOperator(mapOperator.get(key).getMapOperator()));
+			}
+		}
+		return listOperator;
+	}
+
+	private static void updateOperator(Map<String, Operator> mapMenu, Map<String, Operator> mapMenuLevel, String parentIds, String groupParentIds) {
+		if (parentIds.indexOf(MenuUtil.DELIMITER_FUNCTION) > -1) {
+			String[] operatorIds = parentIds.split(MenuUtil.DELIMITER_FUNCTION);
+			String parentOperatorId = operatorIds[0];
+			String currentOperatorId = operatorIds[1];
+			String groupOperatorId = groupParentIds.substring(0, groupParentIds.indexOf(currentOperatorId) + currentOperatorId.length());
+
+			Operator operator = mapMenu.get(currentOperatorId);
+			operator.setParentOperatorIds(groupOperatorId);
+			if (mapMenuLevel.get(parentOperatorId) != null) {
+				mapMenuLevel.get(parentOperatorId).getMapOperator().put(operator.getOperatorId(), operator);
+			}
+
+			parentIds = parentIds.substring(parentIds.indexOf(MenuUtil.DELIMITER_FUNCTION) + MenuUtil.DELIMITER_FUNCTION.length(), parentIds.length());
+
+			if (mapMenuLevel.get(parentOperatorId) != null) {
+				updateOperator(mapMenu, mapMenuLevel.get(parentOperatorId).getMapOperator(), parentIds, groupParentIds);
+			}
+		}
+	}
+
+	private static String searchParentOperator(String parentId, Object[] listOperator) {
+		String parentIds = "";
+
+		if ((parentId != null) && (parentId.trim().length() > 0)) {
+
+			for (Object operatorObject : listOperator) {
+
+				Operator operator = (Operator) operatorObject;
+
+				if (operator.getOperatorId().equals(parentId)) {
+					parentIds = parentIds + MenuUtil.DELIMITER_FUNCTION;
+					parentIds = operator.getOperatorId() + parentIds;
+					String pppId = searchParentOperator(operator.getParentId(), listOperator);
+					if (pppId.length() > 0) {
+						parentIds = pppId + MenuUtil.DELIMITER_FUNCTION + parentIds;
+					}
+				}
+			}
+			if (parentIds.length() > 0) {
+				parentIds = parentIds.substring(0, parentIds.length() - 1);
+			}
+
+		}
+		return parentIds;
 	}
 }

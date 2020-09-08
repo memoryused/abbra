@@ -114,6 +114,33 @@ public class SelectItemManager extends AbstractManager<Object, Object, Object, O
 	}
 	
 	/**
+	 * Lock Status [COMBOBOX]
+	 * @return
+	 * @throws Exception
+	 */
+	public List<CommonSelectItem> searchLockStatusSelectItem() throws Exception {
+		return service.searchLockStatusSelectItem();
+	}
+	
+	/**
+	 * Organization [COMBOBOX]
+	 * @return
+	 * @throws Exception
+	 */
+	public List<CommonSelectItem> searchOrganizationSelectItem() throws Exception {
+		return service.searchOrganizationSelectItem();
+	}
+	
+	/**
+	 * Prefix [COMBOBOX]
+	 * @return
+	 * @throws Exception
+	 */
+	public List<CommonSelectItem> searchPrefixSelectItem() throws Exception {
+		return service.searchPrefixSelectItem();
+	}
+	
+	/**
 	 * @deprecated ไม่ได้ใช้งาน
 	 */
 	@Override

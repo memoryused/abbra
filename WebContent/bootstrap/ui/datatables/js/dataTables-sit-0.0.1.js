@@ -269,7 +269,8 @@
 						orderable: false, 
 						defaultContent: "",
 						render: function (data, type, full, meta) {
-				            return meta.row + ($(that.criteria).find("[name='criteria.linePerPage']").val() * that.$element.DataTable().page()) + 1
+							var pp = Number.isNaN(that.$element.DataTable().page()) ? 0:that.$element.DataTable().page();
+				            return meta.row + ($(that.criteria).find("[name='criteria.linePerPage']").val() * pp) + 1
 				        }
 				}
 				
@@ -674,7 +675,7 @@
 					    	var divPaginate	= $(that.wrapper).find('.dataTables_paginate')
 					    		
 					     	// ซ่อน page navigate ถ้ามีแค่ 1 page
-					    	if($(that.$element).DataTable().page.info().pages == '1') {
+					    	if(!isFinite($(that.$element).DataTable().page.info().pages) || $(that.$element).DataTable().page.info().pages == '1') {
 					    		
 					    		$(divPaginate).css('visibility', 'hidden')
 					    		

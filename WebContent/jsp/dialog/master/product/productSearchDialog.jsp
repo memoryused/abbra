@@ -23,6 +23,7 @@
 
 	function chooseSearchProductDialog() {
 		$("#productSearchDialog").sitDataTableDialog("multiChoose");
+		clearForm('clearSearchProductDialogCallback','criteriaProductContainer','tableProductContainer');
 	}
 
 	/*div สำหรับ กด ดุ detail Error*/

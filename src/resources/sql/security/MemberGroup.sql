@@ -4,9 +4,9 @@ Description : -
 ----------------------------------------------------------------------------------------------------------*/
 searchCountGroup{
   	SELECT COUNT(*) AS TOT
-	FROM [OC].SEC_GROUP U
+	FROM [OC].sec_group U
 	WHERE 1=1
-	  AND U.ACTIVE = %s
+	  AND U.active = %s
 	  AND UPPER(U.GROUP_CODE) LIKE UPPER(CONCAT('%', %s, '%'))
 	  AND UPPER(U.GROUP_NAME) LIKE UPPER(CONCAT('%', %s, '%'))
 }
@@ -20,10 +20,10 @@ searchGroup{
 	U.GROUP_ID,
 	U.GROUP_CODE,
 	U.GROUP_NAME,
-	U.ACTIVE
-  FROM [OC].SEC_GROUP U
+	U.active
+  FROM [OC].sec_group U
   WHERE U.deleted = 'N'
-	AND U.ACTIVE = %s
+	AND U.active = %s
 	AND UPPER(U.GROUP_CODE) LIKE UPPER(CONCAT('%', %s, '%'))
 	AND UPPER(U.GROUP_NAME) LIKE UPPER(CONCAT('%', %s, '%'))
   order by 
@@ -37,10 +37,10 @@ SQL : บันทึกการเปลี่ยนสถานะ_SQL
 Description : -
 ----------------------------------------------------------------------------------------------------------*/
 setActiveStatus{
-	UPDATE [OC].SEC_GROUP
-	SET ACTIVE 		= %s, 		/* สถานะใช้งานที่เลือกเปลี่ยนสถานะ จากหน้าจอค้นหา (ใช้งาน = 'Y' , ยกเลิก = 'N') */
-	UPDATE_DATE 	= sysdate(),  /* วันที่แก้ไขข้อมูล */
-	UPDATE_USER 	= %s		/* IP เครื่องลูกข่ายที่แก้ไขข้อมูลล่าสุด รับค่าจาก Login */
+	UPDATE [OC].sec_group
+	SET active 		= %s, 		/* สถานะใช้งานที่เลือกเปลี่ยนสถานะ จากหน้าจอค้นหา (ใช้งาน = 'Y' , ยกเลิก = 'N') */
+	update_date 	= sysdate(),  /* วันที่แก้ไขข้อมูล */
+	update_user 	= %s		/* IP เครื่องลูกข่ายที่แก้ไขข้อมูลล่าสุด รับค่าจาก Login */
 	WHERE GROUP_ID IN (%s)
 }
 
@@ -50,7 +50,7 @@ Description : -
 ----------------------------------------------------------------------------------------------------------*/
 checkDup{
 	SELECT COUNT(GROUP_ID) AS TOT  /* ถ้าค่า <> 0 แสดงว่าซ้ำ */
-	FROM [OC].SEC_GROUP
+	FROM [OC].sec_group
 	WHERE (UPPER(GROUP_CODE) = UPPER(%s) /* ตรวจสอบจากรหัสกลุ่มผู้ใช้ */
 		OR UPPER(GROUP_NAME) = UPPER(%s) /* ตรวจสอบจากชื่อกลุ่มผู้ใช้ */
 	)
@@ -62,7 +62,7 @@ SQL : Select User_Group_SEQ_SQL
 Description : -
 ----------------------------------------------------------------------------------------------------------*/
 getUserSEQ{
-	SELECT (MAX(GROUP_ID)+1) as GROUP_ID_SEQ FROM [OC].SEC_GROUP
+	SELECT (MAX(GROUP_ID)+1) as GROUP_ID_SEQ FROM [OC].sec_group
 }
 
 /*----------------------------------------------------------------------------------------------------------
@@ -148,13 +148,13 @@ searchProgramLevel{
 	SELECT
 	MIN(SO.OPERATOR_LEVEL) AS MIN_OPERATOR_LEVEL,
 	MAX(SO.OPERATOR_LEVEL) AS MAX_OPERATOR_LEVEL
-	FROM [OC].SEC_OPERATOR SO
-	WHERE SO.ACTIVE = 'Y'
+	FROM [OC].sec_operator SO
+	WHERE SO.active = 'Y'
 	AND SO.REPORT_TYPE IN('P')
 	/* เงื่อนไข กรณีเรียกใช้จากข้อมูลกลุ่มผู้ใช้ */
-	AND SO.OPERATOR_ID IN (SELECT OPERATOR_ID FROM [OC].SEC_GROUP_OPERATOR  WHERE GROUP_ID = %s)
+	AND SO.OPERATOR_ID IN (SELECT g.OPERATOR_ID FROM [OC].sec_group_operator g WHERE g.GROUP_ID = %s)
 	/* เงื่อนไข กรณีเรียกใช้จากข้อมูลผู้ใช้ */
-	AND SO.OPERATOR_ID IN (SELECT OPERATOR_ID FROM [OC].SEC_USER_OPERATOR  WHERE USER_ID = %s)
+	AND SO.OPERATOR_ID IN (SELECT u.OPERATOR_ID FROM [OC].sec_user_operator u WHERE u.USER_ID = %s)
 	ORDER BY SO.OPERATOR_LEVEL ASC, SO.LIST_NO ASC
 }
 
@@ -166,14 +166,14 @@ searchProgramByGroupId{
 	SO.OPERATOR_TYPE,
 	SO.OPERATOR_LEVEL,
 	SO.URL,
-	SO.ACTIVE
-	FROM [OC].SEC_OPERATOR SO
-	WHERE SO.ACTIVE = 'Y'
+	SO.active
+	FROM [OC].sec_operator SO
+	WHERE SO.active = 'Y'
 	AND SO.REPORT_TYPE IN('P')
 	/* เงื่อนไข กรณีเรียกใช้จากข้อมูลกลุ่มผู้ใช้ */
-	AND SO.OPERATOR_ID IN (SELECT OPERATOR_ID FROM [OC].SEC_GROUP_OPERATOR  WHERE GROUP_ID = %s)
+	AND SO.OPERATOR_ID IN (SELECT g.OPERATOR_ID FROM [OC].sec_group_operator g WHERE g.GROUP_ID = %s)
 	/* เงื่อนไข กรณีเรียกใช้จากข้อมูลผู้ใช้ */
-	AND SO.OPERATOR_ID IN (SELECT OPERATOR_ID FROM [OC].SEC_USER_OPERATOR  WHERE USER_ID = %s)
+	AND SO.OPERATOR_ID IN (SELECT u.OPERATOR_ID FROM [OC].sec_user_operator u WHERE u.USER_ID = %s)
 	ORDER BY SO.OPERATOR_LEVEL ASC, SO.LIST_NO ASC
 }
 
@@ -191,10 +191,10 @@ searchUserByGroupId{
 	U.POSITION_NAME,
 	U.LOCK_STATUS,
 	U.ACTIVE
-	FROM [OC].SEC_USER U
-	LEFT OUTER JOIN [OC].M_ORGANIZATION O ON (U.ORGANIZATION_ID = O.ORGANIZATION_ID)
-	LEFT OUTER JOIN [OC].M_PREFIX P ON (U.PREFIX_ID = P.PREFIX_ID)
-	WHERE U.USER_ID IN (SELECT USER_ID FROM [OC].SEC_USER_GROUP WHERE GROUP_ID = %s) 	/* &GROUP_ID ข้อมูลที่เลือก */
+	FROM [OC].sec_user U
+	LEFT OUTER JOIN [OC].m_organization O ON (U.ORGANIZATION_ID = O.organization_id)
+	LEFT OUTER JOIN [OC].m_prefix P ON (U.PREFIX_ID = P.prefix_id)
+	WHERE U.USER_ID IN (SELECT g.USER_ID FROM [OC].sec_user_group g WHERE g.GROUP_ID = %s) 	/* &GROUP_ID ข้อมูลที่เลือก */
 	AND U.USER_ID > 0
 }
 
@@ -217,7 +217,7 @@ SQL : บันทึกลบรายการสิทธิ์โปรแ�
 Description : -
 ----------------------------------------------------------------------------------------------------------*/
 deleteOperator{
-	DELETE FROM [OC].SEC_GROUP_OPERATOR
+	DELETE FROM [OC].sec_group_operator
 	WHERE GROUP_ID = %s /* รหัสอ้างอิงข้อมูลกลุ่มผู้ใช้ที่เลือกแก้ไข */
 }
 
@@ -226,6 +226,6 @@ SQL : บันทึกลบรายการผู้ใช้ที่อ�
 Description : -
 ----------------------------------------------------------------------------------------------------------*/
 deleteUser{
-	DELETE FROM [OC].SEC_USER_GROUP
+	DELETE FROM [OC].sec_user_group
 	WHERE GROUP_ID = %s /* รหัสอ้างอิงข้อมูลกลุ่มผู้ใช้ที่เลือกแก้ไข */
 }

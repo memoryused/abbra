@@ -62,8 +62,7 @@ public class GroupManager extends AbstractManager<GroupSearchCriteria, Group, Gr
 			long groupId = service.add(obj);
 			
 			//service.afterEditGroup(Long.toString(groupId));
-			conn.rollback();
-			//conn.commit();
+			conn.commit();
 		} catch (Exception e) {
 			conn.rollback();
 			throw e;

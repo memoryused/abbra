@@ -20,6 +20,7 @@
 
 	function chooseSearchUserDialog() {
 		$("#userSearchDialog").sitDataTableDialog("multiChoose");
+		clearForm('clearSearchUserDialogCallback','criteriaUserContainer','tableUserContainer');
 	}
 
 	/*div สำหรับ กด ดุ detail Error*/

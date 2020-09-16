@@ -4,9 +4,9 @@ Description : -
 ----------------------------------------------------------------------------------------------------------*/
 countUser{
 	SELECT COUNT(*) AS TOT
-	FROM [OC].SEC_USER U
-	LEFT OUTER JOIN [OC].M_ORGANIZATION O ON (U.ORGANIZATION_ID = O.ORGANIZATION_ID AND O.ACTIVE = 'Y')
-	LEFT OUTER JOIN [OC].M_PREFIX P ON (U.PREFIX_ID = P.PREFIX_ID AND P.ACTIVE = 'Y')
+	FROM [OC].sec_user U
+	LEFT OUTER JOIN [OC].m_organization O ON (U.ORGANIZATION_ID = O.organization_id AND O.active = 'Y')
+	LEFT OUTER JOIN [OC].m_prefix P ON (U.PREFIX_ID = P.prefix_id AND P.active = 'Y')
 	WHERE 1 = 1
 	AND U.USER_ID > 0
 	AND UPPER(U.USER_CODE) LIKE UPPER(CONCAT('%', %s, '%')) /* รหัสพนักงาน */
@@ -29,15 +29,15 @@ searchUser{
 	U.USER_ID,
 	U.USER_CODE,
 	U.USERNAME,
-	CONCAT(P.PREFIX_NAME, " ", U.FORENAME, " ", U.SURNAME) as fullname ,
+	CONCAT(P.prefix_name, " ", U.FORENAME, " ", U.SURNAME) as fullname ,
 	O.ORGANIZATION_NAME,
 	U.POSITION_NAME,
 	U.LOCK_STATUS,
 	U.ACTIVE,
 	U.EMAIL
-	FROM [OC].SEC_USER U
-	LEFT OUTER JOIN [OC].M_ORGANIZATION O ON (U.ORGANIZATION_ID = O.ORGANIZATION_ID AND O.ACTIVE = 'Y')
-	LEFT OUTER JOIN [OC].M_PREFIX P ON (U.PREFIX_ID = P.PREFIX_ID AND P.ACTIVE = 'Y')
+	FROM [OC].sec_user U
+	LEFT OUTER JOIN [OC].m_organization O ON (U.ORGANIZATION_ID = O.organization_id AND O.active = 'Y')
+	LEFT OUTER JOIN [OC].m_prefix P ON (U.PREFIX_ID = P.prefix_id AND P.active = 'Y')
 	WHERE 1 = 1
 	AND U.USER_ID > 0
 	AND UPPER(U.USER_CODE) LIKE UPPER(CONCAT('%', %s, '%')) /* รหัสพนักงาน */

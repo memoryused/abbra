@@ -23,6 +23,7 @@
 
 	function chooseSearchVendorDialog() {
 		$("#vendorSearchDialog").sitDataTableDialog("multiChoose");
+		clearForm('clearSearchVendorDialogCallback','criteriaVendorContainer','tableVendorContainer');
 	}
 
 	/*div สำหรับ กด ดุ detail Error*/

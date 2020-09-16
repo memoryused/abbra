@@ -4,9 +4,9 @@ Description : -
 ----------------------------------------------------------------------------------------------------------*/
 countGroup{
 	SELECT COUNT(*) AS TOT
-	FROM [OC].SEC_GROUP U
+	FROM [OC].sec_group U
 	WHERE 1=1
-	AND U.ACTIVE = %s  /* สถานะใช้งาน */
+	AND U.active = %s  /* สถานะใช้งาน */
 	AND UPPER(U.GROUP_CODE) LIKE UPPER(CONCAT('%', %s, '%')) /* รหัสกลุ่มผู้ใช้ */
 	AND UPPER(U.GROUP_NAME) LIKE UPPER(CONCAT('%', %s, '%')) /* ชื่อกลุ่มผู้ใช้ */
 	AND U.GROUP_ID NOT IN (%s)
@@ -21,10 +21,10 @@ searchGroup{
 	U.GROUP_ID,
 	U.GROUP_CODE,
 	U.GROUP_NAME,
-	U.ACTIVE
-	FROM [OC].SEC_GROUP U
+	U.active
+	FROM [OC].sec_group U
 	WHERE 1=1
-	AND U.ACTIVE = %s  /* สถานะใช้งาน */
+	AND U.active = %s  /* สถานะใช้งาน */
 	AND UPPER(U.GROUP_CODE) LIKE UPPER(CONCAT('%', %s, '%')) /* รหัสกลุ่มผู้ใช้ */
 	AND UPPER(U.GROUP_NAME) LIKE UPPER(CONCAT('%', %s, '%')) /* ชื่อกลุ่มผู้ใช้ */
 	AND U.GROUP_ID NOT IN (%s)

@@ -22,6 +22,7 @@
 
 	function chooseSearchGroupDialog() {
 		$("#groupUserSearchDialog").sitDataTableDialog("multiChoose");
+		clearForm('clearSearchGroupDialogCallback','criteriaGroupContainer','tableGroupContainer');
 	}
 
 	/*div สำหรับ กด ดุ detail Error*/

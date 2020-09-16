@@ -1,7 +1,7 @@
 searchUserLogin{
 	SELECT SU.USER_ID,  SU.PREFIX_ID
     , SU.FORENAME, SU.SURNAME
-    , CONCAT(SP.PREFIX_NAME, SU.FORENAME, '  ',SU.SURNAME) as FULLNAME
+    , CONCAT(SP.prefix_name, SU.FORENAME, '  ',SU.SURNAME) as FULLNAME
     , SU.ORGANIZATION_ID , SU.POSITION_NAME, SU.EMAIL
     , date_format(SU.START_DATE, '%d/%m/%Y %H:%i:%S') as START_DATE
     , date_format(SU.END_DATE, '%d/%m/%Y %H:%i:%S') as END_DATE
@@ -12,7 +12,7 @@ searchUserLogin{
     , date_format(SU.LOCK_DATE, '%d/%m/%Y %H:%i:%S') as LOCK_DATE
     , SU.ACTIVE
 	FROM [OC].sec_user SU
-	 LEFT JOIN [OC].m_prefix SP ON SU.PREFIX_ID = SP.PREFIX_ID
+	 LEFT JOIN [OC].m_prefix SP ON SU.PREFIX_ID = SP.prefix_id
    WHERE SU.USERNAME = %s
 }
 
@@ -85,7 +85,7 @@ searchOperatorId{
 	          FROM [OC].sec_user_group G, [OC].sec_user U, [OC].sec_group S
 	            WHERE  U.USER_ID =G.USER_ID
 	            AND S.GROUP_ID = G.GROUP_ID 
-	            AND S.ACTIVE = 'Y'
+	            AND S.active = 'Y'
 	            AND U.USER_ID = %s
 	      )
 	)A
@@ -94,7 +94,7 @@ searchOperatorId{
 searchOperatorLevel{
 	SELECT MIN(SO.OPERATOR_LEVEL) as MIN_LEVEL, MAX(SO.OPERATOR_LEVEL) as MAX_LEVEL
 	FROM [OC].sec_operator SO
-	WHERE SO.ACTIVE = 'Y'
+	WHERE SO.active = 'Y'
 	AND SO.REPORT_TYPE IN('P','R')
 	AND SO.OPERATOR_ID IN (%s)
 }
@@ -103,7 +103,7 @@ searchOperator{
 	SELECT SO.OPERATOR_ID, SO.PARENT_ID
   	, SO.LABEL, SO.OPERATOR_TYPE, SO.OPERATOR_LEVEL, SO.URL, SO.ACTIVE
 	FROM [OC].sec_operator SO
-	WHERE SO.ACTIVE = 'Y'
+	WHERE SO.active = 'Y'
     AND SO.REPORT_TYPE IN('P','R')
  	AND SO.OPERATOR_ID IN (%s)
 	ORDER BY SO.OPERATOR_LEVEL ASC, SO.LIST_NO ASC

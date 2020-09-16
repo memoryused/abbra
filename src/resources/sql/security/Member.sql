@@ -74,11 +74,11 @@ searchLevel{
 	SELECT
 		MIN(SO.OPERATOR_LEVEL) AS MIN_OPERATOR_LEVEL,
 		MAX(SO.OPERATOR_LEVEL) AS MAX_OPERATOR_LEVEL
-		FROM [OC].SEC_OPERATOR SO
-	WHERE SO.ACTIVE = 'Y'
+		FROM [OC].sec_operator SO
+	WHERE SO.active = 'Y'
 	AND SO.REPORT_TYPE IN(%s)
 	/* เงื่อนไข กรณีเรียกใช้จากข้อมูลผู้ใช้ */
-	AND SO.OPERATOR_ID IN (SELECT OPERATOR_ID FROM [OC].SEC_USER_OPERATOR  WHERE USER_ID = %s)
+	AND SO.OPERATOR_ID IN (SELECT u.OPERATOR_ID FROM [OC].sec_user_operator u WHERE u.USER_ID = %s)
 	ORDER BY SO.OPERATOR_LEVEL ASC, SO.LIST_NO ASC
 }
 
@@ -93,12 +93,12 @@ searchProgramByUserId{
 	SO.OPERATOR_TYPE,
 	SO.OPERATOR_LEVEL,
 	SO.URL,
-	SO.ACTIVE
-	FROM [OC].SEC_OPERATOR SO
-	WHERE SO.ACTIVE = 'Y'
+	SO.active
+	FROM [OC].sec_operator SO
+	WHERE SO.active = 'Y'
 	AND SO.REPORT_TYPE IN(%s)
 	/* เงื่อนไข กรณีเรียกใช้จากข้อมูลผู้ใช้ */
-	AND SO.OPERATOR_ID IN (SELECT OPERATOR_ID FROM [OC].SEC_USER_OPERATOR  WHERE USER_ID = %s)
+	AND SO.OPERATOR_ID IN (SELECT u.OPERATOR_ID FROM [OC].sec_user_operator u WHERE u.USER_ID = %s)
 	ORDER BY SO.OPERATOR_LEVEL ASC, SO.LIST_NO ASC
 }
 
@@ -111,17 +111,17 @@ searchGroupByUserId{
 	U.GROUP_ID,
 	U.GROUP_CODE,
 	U.GROUP_NAME,
-	U.ACTIVE
-	FROM [OC].SEC_GROUP U
-	WHERE U.ACTIVE = 'Y'
+	U.active
+	FROM [OC].sec_group U
+	WHERE U.active = 'Y'
 	/*อ้างอิงกับผู้ใช้  &USER_ID รหัสอ้างอิงข้อมูลผู้ใช้*/
-	AND U.GROUP_ID IN (SELECT GROUP_ID FROM [OC].SEC_USER_GROUP WHERE USER_ID = %s)     /* &USER_ID ข้อมูลที่เลือก */
+	AND U.GROUP_ID IN (SELECT g.GROUP_ID FROM [OC].sec_user_group g WHERE g.USER_ID = %s)     /* &USER_ID ข้อมูลที่เลือก */
     ORDER BY U.GROUP_CODE
 }
 
 checkDup{
 	SELECT COUNT(USER_ID) AS TOT  /* ถ้าค่า <> 0 แสดงว่าซ้ำ */
-	FROM [OC].SEC_USER
+	FROM [OC].sec_user
 	WHERE USER_ID IS NOT NULL
 	AND (
 		UPPER(USERNAME) = UPPER(%s)		/* ตรวจสอบจากรหัสผู้ใช้ไม่ซ้ำ */
@@ -130,7 +130,7 @@ checkDup{
 }
 
 getUserSEQ{
-	SELECT (MAX(USER_ID)+1) as USER_ID_SEQ FROM [OC].SEC_USER
+	SELECT (MAX(USER_ID)+1) as USER_ID_SEQ FROM [OC].sec_user
 }
 
 insertMember{
@@ -192,11 +192,11 @@ SQL : บันทึกเพิ่มรายการสิทธิ์โ�
 Description : วนลูปบันทึก
 ----------------------------------------------------------------------------------------------------------*/
 insertUserOperator{
-	INSERT INTO [OC].SEC_USER_OPERATOR (
+	INSERT INTO [OC].sec_user_operator (
 		USER_ID,
 		OPERATOR_ID,
-		CREATE_USER,
-		CREATE_DATE
+		create_user,
+		create_date
 	)
 	VALUES (
 		%s,  			/* รหัสอ้างอิงผู้ใช้ ซึ่งค่าจะได้จาก Select User SEQ_SQL */
@@ -211,11 +211,11 @@ SQL : บันทึกเพิ่มรายการกลุ่มผู�
 Description : วนลูปบันทึก
 ----------------------------------------------------------------------------------------------------------*/
 insertUserGroup{
-	INSERT INTO [OC].SEC_USER_GROUP (
+	INSERT INTO [OC].sec_user_group (
 		GROUP_ID,
 		USER_ID,
-		CREATE_USER,
-		CREATE_DATE
+		create_user,
+		create_date
 	)
 	VALUES (
 		%s, 		/* &GROUP_ID ในหน้าจอ */
@@ -230,7 +230,7 @@ SQL : บันทึกแก้ไขผู้ใช้_SQL
 Description : -
 ----------------------------------------------------------------------------------------------------------*/
 setMember{
-	UPDATE [OC].SEC_USER
+	UPDATE [OC].sec_user
 	SET  USER_CODE               = %s,  	/*รหัสเจ้าหน้าที่*/
 		   PREFIX_ID             = %s,  		/*รหัสอ้างอิงคำนำหน้าชื่อได้จาก Combo*/
 		   SURNAME               = %s,  		/*นามสกุล (ภาษาไทย)*/
@@ -250,8 +250,8 @@ setMember{
 		   /* ----------------------------------------- */
 		   ACTIVE                = %s,   	/*สถานะใช้งาน*/
 		   LOCK_STATUS           = %s,  /*สถานะล็อกอิน*/
-		   UPDATE_USER           = %s,    /*รหัสอ้างอิงผู้ใช้ที่แก้ไขข้อมูลล่าสุด รับค่าจาก Login*/
-		   UPDATE_DATE           = sysdate()   	/*วันที่แก้ไขข้อมูลล่าสุด*/
+		   update_user           = %s,    /*รหัสอ้างอิงผู้ใช้ที่แก้ไขข้อมูลล่าสุด รับค่าจาก Login*/
+		   update_date           = sysdate()   	/*วันที่แก้ไขข้อมูลล่าสุด*/
 	WHERE  USER_ID             	 = %s
 }
 
@@ -260,7 +260,7 @@ SQL : บันทึกลบรายการสิทธิ์โปรแ�
 Description : -
 ----------------------------------------------------------------------------------------------------------*/
 deleteOperator{
-	DELETE FROM [OC].SEC_USER_OPERATOR
+	DELETE FROM [OC].sec_user_operator
 	WHERE USER_ID = %s /* รหัสอ้างอิงข้อมูลผู้ใช้ที่เลือกแก้ไข */
 }
 
@@ -269,7 +269,7 @@ SQL : บันทึกลบรายการกลุ่มผู้ใช�
 Description : -
 ----------------------------------------------------------------------------------------------------------*/
 deleteGroup{
-	DELETE FROM [OC].SEC_USER_GROUP
+	DELETE FROM [OC].sec_user_group
 	WHERE USER_ID = %s /* รหัสอ้างอิงข้อมูลผู้ใช้ที่เลือกแก้ไข */
 }
 

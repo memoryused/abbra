@@ -8,6 +8,7 @@ searchCount{
 	      inner join [OC].m_certificate_std cs on cs.CERTIFICATE_ID = td.CERTIFICATE_ID and cs.DOCUMENT_ID = td.DOCUMENT_ID
 	      inner join [OC].m_document_std ds on ds.DOCUMENT_ID = cs.DOCUMENT_ID
 	where td.deleted = 'N'
+	and vi.deleted = 'N'
 	and ih.item_id = %s
 	and vh.vendor_id = %s
 	and ds.DOCUMENT_ID = %s
@@ -28,6 +29,7 @@ search{
 	      inner join [OC].m_certificate_std cs on cs.CERTIFICATE_ID = td.CERTIFICATE_ID and cs.DOCUMENT_ID = td.DOCUMENT_ID
 	      inner join [OC].m_document_std ds on ds.DOCUMENT_ID = cs.DOCUMENT_ID
 	where td.deleted = 'N'
+	and vi.deleted = 'N'
 	and ih.item_id = %s
 	and vh.vendor_id = %s
 	and ds.DOCUMENT_ID = %s

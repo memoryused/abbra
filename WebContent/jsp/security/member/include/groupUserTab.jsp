@@ -87,15 +87,10 @@ function chooseGroupDialog(json) {
 	
 		// หาค่า index  ก่อนหน้า
 		var idx = jQuery('table#' + tblId + ' tbody tr').length;
-		
-		if (jQuery("[name='page']").val() == 'ADD'){
-			// Clear datatable
-			jQuery('table#' + tblId).DataTable().clear().draw(false);
-			idx = 0;
-			
-			//Clear selectrd ID
-			jQuery('#divGroupDialogResult_idsSelectedRow').val("");
-		} else{
+		var trEmpty = jQuery('table#' + tblId + ' tbody tr td.dataTables_empty').length;
+
+		if(trEmpty > 0){
+			idx = 0;	//Case ไม่เคย map มาก่อน
 		}
 		
 		for (var rowIndex = 0; rowIndex < json.length; rowIndex++) {
